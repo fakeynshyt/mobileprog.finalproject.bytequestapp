@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProjectJava">
         <activity
+            android:name=".activities.SuccessActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.ForgotPasswordEditActivity"
             android:exported="false" />
         <activity

@@ -117,7 +117,7 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
                 }, 1000);
 
                 new Handler().postDelayed(() -> {
-                    startActivity(new Intent(ForgotPasswordEditActivity.this, LoggingInActivity.class));
+                    startActivity(new Intent(ForgotPasswordEditActivity.this, SuccessActivity.class));
                     finish();
                 }, 2500);
 

@@ -45,5 +45,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("org.mindrot:jbcrypt:0.4")
+    implementation("com.airbnb.android:lottie:6.0.0")
 }
 
