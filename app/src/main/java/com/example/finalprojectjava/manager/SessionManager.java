@@ -6,40 +6,43 @@ import android.content.SharedPreferences;
 public class SessionManager {
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
+    private String userEmail;
 
     public SessionManager(Context context, String userEmail) {
         prefs = context.getSharedPreferences("session_" + userEmail, Context.MODE_PRIVATE);
+        this.userEmail = userEmail;
         editor = prefs.edit();
+        setKeySavedUser();
     }
 
     // Login state
-    public void setKeyLoggedIn(boolean status) {
-        editor.putBoolean("isLoggedIn", status);
+    public void setKeyRememberMe(boolean status) {
+        editor.putBoolean("is_remembered", status);
         editor.apply();
     }
 
-    public boolean isLoggedIn() {
-        return prefs.getBoolean("isLoggedIn", false);
+    public boolean isRemembered() {
+        return prefs.getBoolean("is_remembered", false);
     }
 
     // Sign-in state (new account created)
-    public void setKeySignedIn(boolean status) {
-        editor.putBoolean("isSignedIn", status);
+    public void setKeyNewUser(boolean status) {
+        editor.putBoolean("is_new_user", status);
         editor.apply();
     }
 
     public boolean isSignedIn() {
-        return prefs.getBoolean("isSignedIn", false);
+        return prefs.getBoolean("is_new_user", false);
     }
 
     // Save user email for quick lookup
-    public void setKeySavedUser(String email) {
-        editor.putString("savedUser", email);
+    public void setKeySavedUser() {
+        editor.putString("saved_user", userEmail);
         editor.apply();
     }
 
     public String getKeySavedUser() {
-        return prefs.getString("savedUser", null);
+        return prefs.getString("saved_user", null);
     }
 
     // Clear session for logout

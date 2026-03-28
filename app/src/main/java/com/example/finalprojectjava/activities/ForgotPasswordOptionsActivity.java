@@ -27,6 +27,7 @@ public class ForgotPasswordOptionsActivity extends AppCompatActivity {
         });
     }
 
+    // Navigate to verification activity
     public void navigateToVerificationAct(View view) {
         new Handler().postDelayed(() -> {
             startActivity(new Intent(ForgotPasswordOptionsActivity.this, ForgotPasswordVerificationActivity.class));

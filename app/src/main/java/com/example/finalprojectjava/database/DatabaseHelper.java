@@ -224,6 +224,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void resetUserPassword(String email, String newPassword) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(COLUMN_USER_PASS, newPassword);
+
+        db.update(USER_TABLE, values, COLUMN_USER_EMAIL + " = ?", new String[]{email});
+        db.close();
+    }
+
     public boolean hasUserAccount() {
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + USER_TABLE + " LIMIT 1", null);

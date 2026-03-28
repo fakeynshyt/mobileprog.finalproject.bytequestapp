@@ -111,7 +111,7 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfileActivity.this, LessonActivity.class);
 
             SessionManager session = new SessionManager(this, UserManager.getInstance().getCurrentUser().getUser_email());
-            session.setKeyLoggedIn(false);
+            session.setKeyRememberMe(false);
             startActivity(intent);
             finish();
         });
@@ -162,7 +162,7 @@ public class ProfileActivity extends AppCompatActivity {
 
         // ***** Set Key Signed in false because user already change its profile
         SessionManager session = new SessionManager(this, currentUser.getUser_email());
-        session.setKeySignedIn(false);
+        session.setKeyNewUser(false);
 
         Intent intent = new Intent(ProfileActivity.this, LessonActivity.class);
         startActivity(intent);

@@ -2,6 +2,7 @@ package com.example.finalprojectjava.activities;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
 import com.example.finalprojectjava.helper.NotificationHelper;
+import com.example.finalprojectjava.helper.PrefsHelper;
 import com.example.finalprojectjava.manager.UserManager;
 
 import java.util.Random;
@@ -33,62 +36,81 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
     EditText et_otp_1, et_otp_2, et_otp_3, et_otp_4;
     Button btn_verify;
     TextView txt_display_user, txt_resend_code, txt_code_counter;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_forgot_password_otpactivity);
 
-        et_otp_1 = findViewById(R.id.etOTP1);
-        et_otp_2 = findViewById(R.id.etOTP2);
-        et_otp_3 = findViewById(R.id.etOTP3);
-        et_otp_4 = findViewById(R.id.etOTP4);
+        // Assign widgets from XML
+        et_otp_1 = findViewById(R.id.otp1ET);
+        et_otp_2 = findViewById(R.id.otp2ET);
+        et_otp_3 = findViewById(R.id.otp3ET);
+        et_otp_4 = findViewById(R.id.otp4ET);
 
-        btn_verify = findViewById(R.id.sendBtn);
+        btn_verify = findViewById(R.id.verifyBtn);
 
-        txt_display_user = findViewById(R.id.txtDisplayUser);
-        txt_resend_code = findViewById(R.id.txtResend);
-        txt_code_counter = findViewById(R.id.txtResendCounter);
+        txt_display_user = findViewById(R.id.displayUserTxt);
+        txt_resend_code = findViewById(R.id.resendTxt);
+        txt_code_counter = findViewById(R.id.counterTxt);
 
+        // Sets display user to the UI
         txt_display_user.setText(UserManager.getInstance().getCurrentUser().getUser_email());
+
+        // Autofocus otp fields
         et_otp_1.requestFocus();
-
-        setupOTPField(et_otp_1, et_otp_2);
-        setupOTPField(et_otp_2, et_otp_3);
-        setupOTPField(et_otp_3, et_otp_4);
-
-        removeOTPField(et_otp_4, et_otp_3);
-        removeOTPField(et_otp_3, et_otp_2);
-        removeOTPField(et_otp_2, et_otp_1);
-
-        SharedPreferences globalPrefs = getSharedPreferences("global_session", MODE_PRIVATE);
-
-        long expiry = globalPrefs.getLong("otp_expiry_key", 0);
-
-        otpCodeCounter(expiry);
-
-        btn_verify.setOnClickListener(v -> {
-            int code = globalPrefs.getInt("otp_code_key", 0);
-            String otpField = et_otp_1.getText().toString()
-                    + et_otp_2.getText().toString()
-                    + et_otp_3.getText().toString()
-                    + et_otp_4.getText().toString();
-
-            if(checkCode(otpField, String.valueOf(code))) {
-                new Handler().postDelayed(() -> {
-                    startActivity(new Intent(ForgotPasswordOTPActivity.this, ForgotPasswordEditActivity.class));
-                }, 3000);
-            }
-
-        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        // Set up OTP fields
+        setupOTPField(et_otp_1, et_otp_2);
+        setupOTPField(et_otp_2, et_otp_3);
+        setupOTPField(et_otp_3, et_otp_4);
+
+        // Remove OTP fields
+        removeOTPField(et_otp_4, et_otp_3);
+        removeOTPField(et_otp_3, et_otp_2);
+        removeOTPField(et_otp_2, et_otp_1);
+
+        // Checks if otp counter is currently threading
+        PrefsHelper prefsHelper = new PrefsHelper(this);
+        long expiry = prefsHelper.getLong("otp_expiry_key", 0);
+
+        // Starts counter thread
+        otpCodeCounter(expiry);
+
+        // Verify code
+        btn_verify.setOnClickListener(v -> {
+
+            // Gets the otp code from prefs key
+            int code = prefsHelper.getInt("otp_code_key", 0);
+
+            // Gets all the otp fields and converts to string
+            String otpField = et_otp_1.getText().toString()
+                    + et_otp_2.getText().toString()
+                    + et_otp_3.getText().toString()
+                    + et_otp_4.getText().toString();
+
+            // Checks if otpField matches to the notification code
+            if(checkCode(otpField, String.valueOf(code))) {
+                new Handler().postDelayed(() -> {
+                    startActivity(new Intent(ForgotPasswordOTPActivity.this, ForgotPasswordEditActivity.class));
+                    finish();
+                }, 3000);
+            } else {
+                new Handler().postDelayed(() -> {
+                    Toast.makeText(this, "You didn't enter the expected OTP code.\nPlease try again.", Toast.LENGTH_SHORT).show();
+                }, 1000);
+            }
+        });
     }
 
+    // private methods
     private void setupOTPField(EditText current, EditText next) {
         current.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -133,6 +155,8 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
                     if(secs <= 0)  {
                         int verificationCode = new Random().nextInt(9000) + 1000;
 
+                        txt_code_counter.setText(null);
+
                         txt_resend_code.setTextColor(ContextCompat.getColor(ForgotPasswordOTPActivity.this, R.color.purple));
                         txt_resend_code.setOnClickListener(v -> {
                             SharedPreferences globalPrefs = getSharedPreferences("global_session", MODE_PRIVATE);
@@ -159,7 +183,6 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
                 }
             }
         };
-
         handler.post(runnable);
     }
 

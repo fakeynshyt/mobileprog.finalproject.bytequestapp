@@ -58,9 +58,9 @@ learn IT knowledge for free!"
         android:gravity="center"
         android:orientation="vertical">
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/loginBtn"
-            android:layout_width="234dp"
+            android:layout_width="350dp"
             android:layout_height="60dp"
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/purple"
@@ -68,9 +68,9 @@ learn IT knowledge for free!"
             android:textSize="20dp"
             android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
+        <Button
             android:id="@+id/signInBtn"
-            android:layout_width="234dp"
+            android:layout_width="350dp"
             android:layout_height="60dp"
             android:textSize="20dp"
             android:text="Sign-in"
@@ -78,6 +78,6 @@ learn IT knowledge for free!"
             android:textColor="@color/purple"
             android:backgroundTint="@color/white"
             app:strokeColor="@color/purple"
-            app:strokeWidth="3dp"/>
+            app:strokeWidth="2dp"/>
     </LinearLayout>
 </LinearLayout>
