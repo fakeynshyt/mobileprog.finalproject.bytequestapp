@@ -7,13 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".activities.SigningInActivity"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@drawable/bg_background_2">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/bg_background_3">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -186,7 +185,7 @@
                 android:id="@+id/signInBtn"
                 android:layout_width="350dp"
                 android:layout_height="60dp"
-                android:layout_marginTop="-42dp"
+                android:layout_marginTop="-58dp"
                 android:textSize="20dp"
                 android:text="Sign-in"
                 android:textStyle="bold"

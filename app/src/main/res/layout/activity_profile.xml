@@ -7,13 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".activities.ProfileActivity"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@drawable/bg_background_4">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/bg_background_4">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"

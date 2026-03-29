@@ -24,7 +24,7 @@ public class SuccessActivity extends AppCompatActivity {
         setContentView(R.layout.activity_success);
 
         txt_counter = findViewById(R.id.counterTxt);
-        long staticTimer = System.currentTimeMillis() + 6500;
+        long staticTimer = System.currentTimeMillis() + 6800;
 
         redirectingToLoginCounter(staticTimer);
 
@@ -51,7 +51,7 @@ public class SuccessActivity extends AppCompatActivity {
                     handler.postDelayed(this, 1000);
 
                     if(secs <= 0) {
-                        startActivity(new Intent(SuccessActivity.this, DashboardActivity.class));
+                        startActivity(new Intent(SuccessActivity.this, LoggingInActivity.class));
                         finish();
                     }
                 }

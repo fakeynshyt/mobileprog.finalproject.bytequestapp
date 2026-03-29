@@ -20,9 +20,11 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.finalprojectjava.R;
 import com.example.finalprojectjava.database.DatabaseHelper;
 import com.example.finalprojectjava.helper.PrefsHelper;
+import com.example.finalprojectjava.helper.SnackBarHelper;
 import com.example.finalprojectjava.manager.SessionManager;
 import com.example.finalprojectjava.manager.UserManager;
 import com.example.finalprojectjava.models.User;
+import com.google.android.material.snackbar.Snackbar;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -85,6 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SnackBarHelper.showWarningSnackBar(findViewById(R.id.main), "Error!");
                 new Handler().postDelayed(() -> {
                     startActivity(new Intent(LoginActivity.this, LoggingInActivity.class));
                 }, 500);

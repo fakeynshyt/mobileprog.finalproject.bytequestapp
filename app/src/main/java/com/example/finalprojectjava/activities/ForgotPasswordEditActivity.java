@@ -4,15 +4,21 @@ import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -21,6 +27,7 @@ import com.example.finalprojectjava.R;
 import com.example.finalprojectjava.database.DatabaseHelper;
 import com.example.finalprojectjava.helper.PasswordHashHelper;
 import com.example.finalprojectjava.helper.PrefsHelper;
+import com.example.finalprojectjava.helper.SnackBarHelper;
 import com.example.finalprojectjava.manager.UserManager;
 import com.example.finalprojectjava.models.User;
 
@@ -68,39 +75,115 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
             Log.e(TAG, "User email: " + UserManager.getInstance().getCurrentUser().getUser_email()
                     + "\nOld password: " + oldPassword);
 
+            // Checks if password is empty
+            if(newPass.isEmpty() || confirmPass.isEmpty()) {
+                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Required to fill-up all fields");
+
+                if(newPass.isEmpty()) et_new_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+                if(confirmPass.isEmpty())et_confirm_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+
+                et_new_pass.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_new_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+
+                et_confirm_pass.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_new_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+                return;
+            }
+
+            // Checks if passwords align with the conditions of pattern
+            if(!passwordSyntaxCheck(newPass)) {
+                new Handler().postDelayed(() -> {
+                    SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Password must be 8+ characters with upper & lowercase, number, and special symbol.");
+                }, 500);
+
+                et_new_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+
+                et_new_pass.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_new_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+                return;
+            }
+
+            // Checks if passwords match to confirm password
+            if(!newPass.equals(confirmPass)) {
+                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Password didn't match");
+                et_confirm_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+
+                et_confirm_pass.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_new_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+                return;
+            }
+
+            // Checks if new password is the same as the old password
+            if(newPass.equals(oldPassword)) {
+                new Handler().postDelayed(() -> {
+                    SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "New password cannot be the same as the old password");
+                    et_new_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+
+                    et_new_pass.addTextChangedListener(new TextWatcher() {
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            et_new_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                            et_confirm_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                        }
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                    });
+                }, 800);
+                return;
+            }
+
+            // Save new password
+            prefsHelper.setString("plain_text_pass_key", newPass);
+
+            String newPlainPass = prefsHelper.getString("plain_text_pass_key", "");
+
+            Log.e(TAG, "User email: " + UserManager.getInstance().getCurrentUser().getUser_email()
+                    + "\nNew password: " + newPlainPass);
+
             try {
-                // Checks if password is empty
-                if(newPass.isEmpty()) {
-                    et_confirm_pass.setError("Password cannot be empty. Please try again");
-                    return;
-                }
-
-                // Checks if passwords align with the conditions of pattern
-                if(!passwordSyntaxCheck(newPass)) {
-                    et_new_pass.setError("Password must contain at least 8 characters,\n1 uppercase, 1 lowercase, 1 number and 1 special character");
-                    return;
-                }
-
-                // Checks if passwords match to confirm password
-                if(!newPass.equals(confirmPass)) {
-                    et_confirm_pass.setError("Passwords do not match. Please try again");
-                    return;
-                }
-
-                // Checks if new password is the same as the old password
-                if(newPass.equals(oldPassword)) {
-                    et_new_pass.setError("New password cannot be the same as the old. Please try again");
-                    return;
-                }
-
-                // Save new password
-                prefsHelper.setString("plain_text_pass_key", newPass);
-
-                String newPlainPass = prefsHelper.getString("plain_text_pass_key", "");
-
-                Log.e(TAG, "User email: " + UserManager.getInstance().getCurrentUser().getUser_email()
-                        + "\nNew password: " + newPlainPass);
-
                 DatabaseHelper db = new DatabaseHelper(this);
 
                 // Return user object from database using UserManager
@@ -113,13 +196,9 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
                 db.resetUserPassword(UserManager.getInstance().getCurrentUser().getUser_email(), user.getUser_pass());
 
                 new Handler().postDelayed(() -> {
-                    Toast.makeText(this, "Successfully change password!", Toast.LENGTH_SHORT).show();
-                }, 1000);
-
-                new Handler().postDelayed(() -> {
                     startActivity(new Intent(ForgotPasswordEditActivity.this, SuccessActivity.class));
                     finish();
-                }, 2500);
+                }, 4500);
 
             } catch(Exception e) {
                 Toast.makeText(this, "Something went wrong!\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -133,5 +212,26 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
         Pattern pattern = Pattern.compile(regex);
 
         return pattern.matcher(password).matches();
+    }
+
+    @Override
+    public void onBackPressed() {
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setCornerRadius(15f); // corner radius in pixels
+        drawable.setColor(Color.WHITE); // background color
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("Hold on!")
+                .setMessage("You forgot your password. Leaving now means you can’t log in. Do you want to cancel?")
+                .setPositiveButton("Yes", (dialogOpen, which) -> super.onBackPressed())
+                .setNegativeButton("No", null)
+                .create();
+
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawable(drawable);
+        }
+
+        dialog.show();
     }
 }

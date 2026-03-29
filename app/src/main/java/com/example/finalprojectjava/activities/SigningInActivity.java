@@ -6,6 +6,8 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -22,6 +25,7 @@ import com.example.finalprojectjava.R;
 import com.example.finalprojectjava.database.DatabaseHelper;
 import com.example.finalprojectjava.helper.PasswordHashHelper;
 import com.example.finalprojectjava.helper.PrefsHelper;
+import com.example.finalprojectjava.helper.SnackBarHelper;
 import com.example.finalprojectjava.manager.SessionManager;
 import com.example.finalprojectjava.manager.UserManager;
 import com.example.finalprojectjava.models.User;
@@ -66,41 +70,177 @@ public class SigningInActivity extends AppCompatActivity {
 
         // Create a new account
         btn_sign_in.setOnClickListener(v -> {
-            User user;
+
+            // Checks user input if empty
+            if (et_first_name.getText().toString().isEmpty() ||
+                    et_last_name.getText().toString().isEmpty() ||
+                    et_email.getText().toString().isEmpty() ||
+                    et_pass.getText().toString().isEmpty() ||
+                    et_confirm_pass.getText().toString().isEmpty()) {
+
+                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Required to fill-up all fields");
+
+                if(et_first_name.getText().toString().isEmpty()) et_first_name.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+                if(et_last_name.getText().toString().isEmpty()) et_last_name.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+                if(et_email.getText().toString().isEmpty()) et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+                if(et_pass.getText().toString().isEmpty()) et_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+                if(et_confirm_pass.getText().toString().isEmpty()) et_confirm_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+
+                et_first_name.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_last_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+
+                et_last_name.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_last_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+
+                et_email.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_last_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+
+                et_pass.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_last_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+
+                et_confirm_pass.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_last_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+
+                return;
+            }
+
+            // Checks user email if matches to email syntax
+            if(!emailSyntaxCheck(et_email.getText().toString())) {
+
+                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid email");
+
+                et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+
+                et_email.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+            }
+
+            // Checks user password if matches to the pattern
+            if(!passwordSyntaxCheck(et_pass.getText().toString())) {
+
+                new Handler().postDelayed(() -> {
+                    SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Password must be 8+ characters with upper & lowercase, number, and special symbol.");
+                }, 500);
+
+                et_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+
+                et_pass.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+
+                return;
+            }
+
+            // Checks user password and confirm password input matches
+            if(!et_pass.getText().toString().equals(et_confirm_pass.getText().toString())) {
+                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Password didn't match");
+                et_confirm_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+
+                et_confirm_pass.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
+
+                return;
+            }
+
+            // Handles application error
             try {
-                // Checks user input if empty
-                if (et_first_name.getText().toString().isEmpty() ||
-                        et_last_name.getText().toString().isEmpty() ||
-                        et_email.getText().toString().isEmpty() ||
-                        et_pass.getText().toString().isEmpty()) {
-                    Log.e(TAG, "Empty fields!");
-                    Toast.makeText(this, "Please fill up all fields!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // Checks user email if matches to email syntax
-                if(!emailSyntaxCheck(et_email.getText().toString())) {
-                    Log.e(TAG, "Invalid Email!");
-                    et_email.setError("Email must contain @bytequest.com");
-                    return;
-                }
-
-                // Checks user password if matches to the pattern
-                if(!passwordSyntaxCheck(et_pass.getText().toString())) {
-                    Log.e(TAG, "Invalid Password!");
-                    et_pass.setError("Password must contain at least 8 characters,\n1 uppercase, 1 lowercase, 1 number and 1 special character");
-                    return;
-                }
-
-                // Checks user password and confirm password input matches
-                if(!et_pass.getText().toString().equals(et_confirm_pass.getText().toString())) {
-                    Log.e(TAG, "Passwords do not match!");
-                    et_confirm_pass.setError("Passwords do not match!");
-                    return;
-                }
-
                 // Creates a new user object
-                user = new User(-1, et_email.getText().toString(),
+                User user = new User(-1, et_email.getText().toString(),
                         et_pass.getText().toString(), et_first_name.getText().toString(), et_last_name.getText().toString());
 
                 // Saved plain text password
@@ -110,38 +250,67 @@ public class SigningInActivity extends AppCompatActivity {
                 // Hash password
                 user.setUser_pass(PasswordHashHelper.getInstance().passwordHasher(user.getUser_pass()));
 
-                // Checks if error occurs in creating an account
+                // Checks if creating an account is complete and successful and store user in database
+                DatabaseHelper databaseHelper = new DatabaseHelper(this);
+                boolean success = databaseHelper.createUserAccount(user);
+                Log.e(TAG, "Creating account status: " + success);
+
+                // If creating an account is success
+                if (success) {
+                    // Saved user for quick lookup
+                    UserManager.getInstance().setCurrentUser(user);
+
+                    // Save user email for backup & safety
+                    SessionManager session = new SessionManager(this, user.getUser_email());
+
+                    // Set new user and edit profile when new user
+                    session.setKeyNewUser(true);
+
+                    new Handler().postDelayed(() -> {
+                        SnackBarHelper.showSuccessSnackBar(findViewById(R.id.main), "User account successfully created!");
+                    }, 1000);
+
+                    new Handler().postDelayed(() -> {
+                        startActivity(new Intent(SigningInActivity.this, DashboardActivity.class));
+                        finish();
+                    }, 1500);
+                } else {
+                    new Handler().postDelayed(() -> {
+                        SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "User account is already existing");
+
+                        et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+
+                        et_email.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void afterTextChanged(Editable s) {
+                                et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                            }
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                        });
+                    }, 500);
+                }
+                // Catches application error to prevent crash
             } catch (Exception e) {
                 Log.e(TAG, "Error creating an account: " + e.getMessage());
-                Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show();
-                user = new User(-1, null, null, null, null);
-            }
+                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Something went wrong");
 
-            // Checks if creating an account is complete and successful and store user in database
-            DatabaseHelper databaseHelper = new DatabaseHelper(this);
-            boolean success = databaseHelper.createUserAccount(user);
-            Log.e(TAG, "Creating account status: " + success);
+                et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
 
-            // If creating an account is success
-            if (success) {
-                // Saved user for quick lookup
-                UserManager.getInstance().setCurrentUser(user);
+                et_email.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                    }
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-                // Save user email for backup & safety
-                SessionManager session = new SessionManager(this, user.getUser_email());
-
-                // Set new user and edit profile when new user
-                session.setKeyNewUser(true);
-
-                Toast.makeText(this, "Account successfully created!", Toast.LENGTH_SHORT).show();
-
-                new Handler().postDelayed(() -> {
-                    startActivity(new Intent(SigningInActivity.this, DashboardActivity.class));
-                }, 1500);
-                finish();
-
-            } else {
-                Toast.makeText(this, "Account creation failed!", Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                });
             }
         });
     }

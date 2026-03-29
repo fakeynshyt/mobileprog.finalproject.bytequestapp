@@ -31,7 +31,7 @@ public class SessionManager {
         editor.apply();
     }
 
-    public boolean isSignedIn() {
+    public boolean isNewUser() {
         return prefs.getBoolean("is_new_user", false);
     }
 

@@ -7,5 +7,7 @@
     <color name="gray">#a495b9</color>
     <color name="lightGray">#BEB2C8</color>
     <color name="darkGray">#675E71</color>
-    <color name="transparentLightGray">#80B0A8C3</color>
+    <color name="transparentLightGray">#89D4C8DB</color>
+    <color name="testColorScheme1">#C0FFDDDD</color>
+    <color name="dullPurple">#69499E</color>
 </resources>
