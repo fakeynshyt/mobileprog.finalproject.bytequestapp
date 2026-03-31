@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
 
-public class ForgotPasswordOptionsActivity extends AppCompatActivity {
+public class ResetOptionActivity extends AppCompatActivity {
 
     ImageView iv_go_back;
     @SuppressLint("MissingInflatedId")
@@ -43,7 +43,7 @@ public class ForgotPasswordOptionsActivity extends AppCompatActivity {
     // Navigate to verification activity
     public void navigateToVerificationAct(View view) {
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(ForgotPasswordOptionsActivity.this, ForgotPasswordVerificationActivity.class));
+            startActivity(new Intent(ResetOptionActivity.this, PasswordVerificationActivity.class));
         }, 1000);
     }
 }

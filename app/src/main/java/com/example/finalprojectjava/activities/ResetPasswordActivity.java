@@ -33,7 +33,7 @@ import com.example.finalprojectjava.models.User;
 
 import java.util.regex.Pattern;
 
-public class ForgotPasswordEditActivity extends AppCompatActivity {
+public class ResetPasswordActivity extends AppCompatActivity {
 
     EditText et_new_pass, et_confirm_pass;
     Button btn_continue, btn_cancel;
@@ -60,7 +60,7 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
 
         // Navigate to logging in activity
         btn_cancel.setOnClickListener(v -> {
-            finish();
+            onBackPressed();
         });
 
         // Create new password
@@ -85,8 +85,8 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
                 et_new_pass.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_new_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                        et_new_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -98,8 +98,8 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
                 et_confirm_pass.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_new_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                        et_new_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -121,8 +121,8 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
                 et_new_pass.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_new_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                        et_new_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -141,8 +141,8 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
                 et_confirm_pass.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_new_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                        et_new_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -162,8 +162,8 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
                     et_new_pass.addTextChangedListener(new TextWatcher() {
                         @Override
                         public void afterTextChanged(Editable s) {
-                            et_new_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
-                            et_confirm_pass.setBackground(ContextCompat.getDrawable(ForgotPasswordEditActivity.this, R.drawable.bg_background_edittext));
+                            et_new_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
+                            et_confirm_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
                         }
                         @Override
                         public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -196,7 +196,11 @@ public class ForgotPasswordEditActivity extends AppCompatActivity {
                 db.resetUserPassword(UserManager.getInstance().getCurrentUser().getUser_email(), user.getUser_pass());
 
                 new Handler().postDelayed(() -> {
-                    startActivity(new Intent(ForgotPasswordEditActivity.this, SuccessActivity.class));
+                    Intent intent = new Intent(this, SuccessActivity.class);
+                    intent.putExtra("title_key", "Your Password Has Been Reset!");
+                    intent.putExtra("description_key", "Your password has been updated! Please log in with\nyour new credentials to keep your account secure!");
+                    intent.putExtra("where_key", "Login");
+                    startActivity(intent);
                     finish();
                 }, 4500);
 

@@ -2,12 +2,9 @@ package com.example.finalprojectjava.activities;
 
 import static android.content.ContentValues.TAG;
 
-import static java.security.AccessController.getContext;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -16,15 +13,12 @@ import android.os.Looper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -40,7 +34,7 @@ import com.example.finalprojectjava.manager.UserManager;
 
 import java.util.Random;
 
-public class ForgotPasswordOTPActivity extends AppCompatActivity {
+public class VerificationOTPActivity extends AppCompatActivity {
 
     EditText et_otp_1, et_otp_2, et_otp_3, et_otp_4;
     Button btn_verify;
@@ -84,7 +78,6 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
         setupOTPField(et_otp_3, et_otp_4);
         setupOTPField(et_otp_4, null);
 
-
         // Remove OTP fields
         removeOTPField(et_otp_4, et_otp_3);
         removeOTPField(et_otp_3, et_otp_2);
@@ -119,19 +112,19 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
 
                 SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "OTP code cannot be empty");
 
-                if(et_otp_1.getText().toString().isEmpty()) et_otp_1.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_err));
-                if(et_otp_2.getText().toString().isEmpty()) et_otp_2.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_err));
-                if(et_otp_3.getText().toString().isEmpty()) et_otp_3.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_err));
-                if(et_otp_4.getText().toString().isEmpty()) et_otp_4.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_err));
+                if(et_otp_1.getText().toString().isEmpty()) et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
+                if(et_otp_2.getText().toString().isEmpty()) et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
+                if(et_otp_3.getText().toString().isEmpty()) et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
+                if(et_otp_4.getText().toString().isEmpty()) et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
 
                 et_otp_1.addTextChangedListener(new TextWatcher() {
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_otp_1.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_2.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_3.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_4.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
                     }
 
                     @Override
@@ -145,10 +138,10 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_otp_1.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_2.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_3.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_4.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
                     }
 
                     @Override
@@ -162,10 +155,10 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_otp_1.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_2.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_3.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_4.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
                     }
 
                     @Override
@@ -179,10 +172,10 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
 
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_otp_1.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_2.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_3.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_4.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                        et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
                     }
 
                     @Override
@@ -213,7 +206,7 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
                     SnackBarHelper.showInfoSnackBar(findViewById(R.id.main), "Redirecting to reset password...");
                 }, 4500);
                 new Handler().postDelayed(() -> {
-                    startActivity(new Intent(ForgotPasswordOTPActivity.this, ForgotPasswordEditActivity.class));
+                    startActivity(new Intent(VerificationOTPActivity.this, ResetPasswordActivity.class));
                     finish();
                 }, 7500);
             } else {
@@ -226,19 +219,19 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
                     et_otp_3.setText("");
                     et_otp_4.setText("");
 
-                    et_otp_1.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_err));
-                    et_otp_2.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_err));
-                    et_otp_3.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_err));
-                    et_otp_4.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_err));
+                    et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
+                    et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
+                    et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
+                    et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
 
                     et_otp_1.addTextChangedListener(new TextWatcher() {
 
                         @Override
                         public void afterTextChanged(Editable s) {
-                            et_otp_1.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_2.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_3.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_4.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
                         }
 
                         @Override
@@ -252,10 +245,10 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
 
                         @Override
                         public void afterTextChanged(Editable s) {
-                            et_otp_1.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_2.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_3.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_4.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
                         }
 
                         @Override
@@ -269,10 +262,10 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
 
                         @Override
                         public void afterTextChanged(Editable s) {
-                            et_otp_1.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_2.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_3.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_4.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
                         }
 
                         @Override
@@ -286,10 +279,10 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
 
                         @Override
                         public void afterTextChanged(Editable s) {
-                            et_otp_1.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_2.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_3.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_4.setBackground(ContextCompat.getDrawable(ForgotPasswordOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+                            et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
                         }
 
                         @Override
@@ -298,6 +291,11 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
                         @Override
                         public void onTextChanged(CharSequence s, int start, int before, int count) {}
                     });
+
+                    et_otp_1.setKeyListener(new EditText(this).getKeyListener());
+                    et_otp_2.setKeyListener(new EditText(this).getKeyListener());
+                    et_otp_3.setKeyListener(new EditText(this).getKeyListener());
+                    et_otp_4.setKeyListener(new EditText(this).getKeyListener());
 
                     et_otp_1.requestFocus();
                 }, 1000);
@@ -320,8 +318,11 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
                     current.setSelection(current.getText().length());
                 } else if(s.length() == 1 && next == null){
                     current.clearFocus();
-                    InputMethodManager imm4 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm4.hideSoftInputFromWindow(et_otp_4.getWindowToken(), 0);
+                    btn_verify.performClick();
+                    et_otp_1.setKeyListener(null);
+                    et_otp_2.setKeyListener(null);
+                    et_otp_3.setKeyListener(null);
+                    et_otp_4.setKeyListener(null);
                 }
             }
         });
@@ -360,9 +361,9 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
 
                         txt_code_counter.setText(null);
 
-                        txt_resend_code.setTextColor(ContextCompat.getColor(ForgotPasswordOTPActivity.this, R.color.purple));
+                        txt_resend_code.setTextColor(ContextCompat.getColor(VerificationOTPActivity.this, R.color.purple));
                         txt_resend_code.setOnClickListener(v -> {
-                            PrefsHelper prefsHelper = new PrefsHelper(ForgotPasswordOTPActivity.this);
+                            PrefsHelper prefsHelper = new PrefsHelper(VerificationOTPActivity.this);
 
                             prefsHelper.setLong("otp_expiry_key", System.currentTimeMillis() + 59000);
                             prefsHelper.setInt("otp_code_key", verificationCode);
@@ -374,13 +375,13 @@ public class ForgotPasswordOTPActivity extends AppCompatActivity {
 
                             int relayCodeMillis = new Random().nextInt(6500) + (2000 * 2);
 
-                            NotificationHelper otpNotification = new NotificationHelper(ForgotPasswordOTPActivity.this);
+                            NotificationHelper otpNotification = new NotificationHelper(VerificationOTPActivity.this);
 
                             new Handler().postDelayed(() -> {
                                 otpNotification.showNotification("ByteQuest", "Your OTP is " + verificationCode  + ", do not share this code to anyone.", 1);
                             }, relayCodeMillis);
 
-                            txt_resend_code.setTextColor(ContextCompat.getColor(ForgotPasswordOTPActivity.this, R.color.lightGray));
+                            txt_resend_code.setTextColor(ContextCompat.getColor(VerificationOTPActivity.this, R.color.lightGray));
                             otpCodeCounter(expiry);
                         });
                     }

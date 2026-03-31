@@ -14,25 +14,28 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FinalProjectJava">
         <activity
+            android:name=".activities.ChangePasswordActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.SuccessActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ForgotPasswordEditActivity"
+            android:name=".activities.ResetPasswordActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ForgotPasswordOTPActivity"
+            android:name=".activities.VerificationOTPActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ForgotPasswordVerificationActivity"
+            android:name=".activities.PasswordVerificationActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ForgotPasswordOptionsActivity"
+            android:name=".activities.ResetOptionActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LessonActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.ProfileActivity"
+            android:name=".activities.EditProfileActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -40,15 +43,15 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.SigningInActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".activities.LoggingInActivity"
+            android:name=".activities.SignInActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activities.LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.StartUpActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>

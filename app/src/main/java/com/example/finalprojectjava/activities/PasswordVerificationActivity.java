@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,7 +36,7 @@ import com.example.finalprojectjava.models.User;
 
 import java.util.Random;
 
-public class ForgotPasswordVerificationActivity extends AppCompatActivity {
+public class PasswordVerificationActivity extends AppCompatActivity {
 
     Button send_btn;
     EditText et_email;
@@ -105,7 +104,7 @@ public class ForgotPasswordVerificationActivity extends AppCompatActivity {
                 et_email.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_email.setBackground(ContextCompat.getDrawable(ForgotPasswordVerificationActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(PasswordVerificationActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -124,7 +123,7 @@ public class ForgotPasswordVerificationActivity extends AppCompatActivity {
                 et_email.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_email.setBackground(ContextCompat.getDrawable(ForgotPasswordVerificationActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(PasswordVerificationActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -174,7 +173,7 @@ public class ForgotPasswordVerificationActivity extends AppCompatActivity {
                         // Starts counter
                         otpCodeCounter(codeExpiry);
 
-                        startActivity(new Intent(ForgotPasswordVerificationActivity.this, ForgotPasswordOTPActivity.class));
+                        startActivity(new Intent(PasswordVerificationActivity.this, VerificationOTPActivity.class));
                         finish();
                     }, 2000);
                 } else {
@@ -185,7 +184,7 @@ public class ForgotPasswordVerificationActivity extends AppCompatActivity {
                         et_email.addTextChangedListener(new TextWatcher() {
                             @Override
                             public void afterTextChanged(Editable s) {
-                                et_email.setBackground(ContextCompat.getDrawable(ForgotPasswordVerificationActivity.this, R.drawable.bg_background_edittext));
+                                et_email.setBackground(ContextCompat.getDrawable(PasswordVerificationActivity.this, R.drawable.bg_background_edittext));
                             }
                             @Override
                             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

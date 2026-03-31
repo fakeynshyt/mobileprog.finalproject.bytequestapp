@@ -12,7 +12,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,7 +31,7 @@ import com.example.finalprojectjava.models.User;
 
 import java.util.regex.Pattern;
 
-public class SigningInActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity {
 
     EditText et_first_name, et_last_name, et_email, et_pass, et_confirm_pass;
     Button btn_sign_in;
@@ -64,7 +63,7 @@ public class SigningInActivity extends AppCompatActivity {
         // Navigate to logging in activity
         txt_login_click.setOnClickListener(v -> {
             new Handler().postDelayed(() -> {
-                startActivity(new Intent(SigningInActivity.this, LoggingInActivity.class));
+                startActivity(new Intent(SignInActivity.this, LoginActivity.class));
             }, 500);
         });
 
@@ -89,15 +88,15 @@ public class SigningInActivity extends AppCompatActivity {
                 et_first_name.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_last_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_first_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_last_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_first_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void onTextChanged(CharSequence s, int start, int before, int count) {}
@@ -106,11 +105,11 @@ public class SigningInActivity extends AppCompatActivity {
                 et_last_name.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_last_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_first_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_last_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -122,11 +121,11 @@ public class SigningInActivity extends AppCompatActivity {
                 et_email.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_last_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_first_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_last_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -138,11 +137,11 @@ public class SigningInActivity extends AppCompatActivity {
                 et_pass.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_last_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_first_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_last_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
 
                     }
                     @Override
@@ -155,11 +154,11 @@ public class SigningInActivity extends AppCompatActivity {
                 et_confirm_pass.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_first_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_last_name.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_first_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_last_name.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -181,8 +180,8 @@ public class SigningInActivity extends AppCompatActivity {
                 et_email.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -204,8 +203,8 @@ public class SigningInActivity extends AppCompatActivity {
                 et_pass.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -225,7 +224,7 @@ public class SigningInActivity extends AppCompatActivity {
                 et_confirm_pass.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_confirm_pass.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -271,7 +270,7 @@ public class SigningInActivity extends AppCompatActivity {
                     }, 1000);
 
                     new Handler().postDelayed(() -> {
-                        startActivity(new Intent(SigningInActivity.this, DashboardActivity.class));
+                        startActivity(new Intent(SignInActivity.this, DashboardActivity.class));
                         finish();
                     }, 1500);
                 } else {
@@ -283,7 +282,7 @@ public class SigningInActivity extends AppCompatActivity {
                         et_email.addTextChangedListener(new TextWatcher() {
                             @Override
                             public void afterTextChanged(Editable s) {
-                                et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                                et_email.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
                             }
                             @Override
                             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -303,7 +302,7 @@ public class SigningInActivity extends AppCompatActivity {
                 et_email.addTextChangedListener(new TextWatcher() {
                     @Override
                     public void afterTextChanged(Editable s) {
-                        et_email.setBackground(ContextCompat.getDrawable(SigningInActivity.this, R.drawable.bg_background_edittext));
+                        et_email.setBackground(ContextCompat.getDrawable(SignInActivity.this, R.drawable.bg_background_edittext));
                     }
                     @Override
                     public void beforeTextChanged(CharSequence s, int start, int count, int after) {}

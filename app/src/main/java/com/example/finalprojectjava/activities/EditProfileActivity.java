@@ -29,7 +29,7 @@ import com.example.finalprojectjava.manager.SessionManager;
 import com.example.finalprojectjava.manager.UserManager;
 import com.example.finalprojectjava.models.User;
 
-public class ProfileActivity extends AppCompatActivity {
+public class EditProfileActivity extends AppCompatActivity {
 
     EditText inputFullName, inputUsername, inputAddress;
     CheckBox male, female;
@@ -100,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         goBackClick.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, LoggingInActivity.class);
+            Intent intent = new Intent(EditProfileActivity.this, LoginActivity.class);
 
             SessionManager session = new SessionManager(this, UserManager.getInstance().getCurrentUser().getUser_email());
             startActivity(intent);
@@ -108,7 +108,7 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
         skipClick.setOnClickListener(v -> {
-            Intent intent = new Intent(ProfileActivity.this, LessonActivity.class);
+            Intent intent = new Intent(EditProfileActivity.this, LessonActivity.class);
 
             SessionManager session = new SessionManager(this, UserManager.getInstance().getCurrentUser().getUser_email());
             session.setKeyRememberMe(false);
@@ -164,7 +164,7 @@ public class ProfileActivity extends AppCompatActivity {
         SessionManager session = new SessionManager(this, currentUser.getUser_email());
         session.setKeyNewUser(false);
 
-        Intent intent = new Intent(ProfileActivity.this, LessonActivity.class);
+        Intent intent = new Intent(EditProfileActivity.this, LessonActivity.class);
         startActivity(intent);
         finish();
     }

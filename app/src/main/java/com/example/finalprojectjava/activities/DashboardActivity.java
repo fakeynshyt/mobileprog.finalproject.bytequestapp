@@ -30,9 +30,9 @@ public class DashboardActivity extends AppCompatActivity {
 
         SessionManager session = new SessionManager(this, UserManager.getInstance().getCurrentUser().getUser_email());
 
-        boolean isSignedIn = session.isNewUser();
-        if(isSignedIn) {
-            Intent intent = new Intent(this, ProfileActivity.class);
+        boolean isNewUser = session.isNewUser();
+        if(isNewUser) {
+            Intent intent = new Intent(this, EditProfileActivity.class);
             startActivity(intent);
             finish();
         }

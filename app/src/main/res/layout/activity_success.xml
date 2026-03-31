@@ -59,16 +59,18 @@
             android:gravity="center">
 
             <TextView
+                android:id="@+id/titleTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your password has been reset!"
+                android:text="Title here!"
                 android:textSize="24dp"
                 android:textColor="@color/darkGray"/>
 
             <TextView
+                android:id="@+id/descTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your password has been updated! Please log in with\n your new credentials to keep your account secure."
+                android:text="Description here!"
                 android:textSize="14dp"
                 android:textAlignment="center"/>
         </LinearLayout>
@@ -88,11 +90,11 @@
                 app:lottie_loop="true" />
 
             <TextView
-                android:id="@+id/counterTxt"
+                android:id="@+id/whereTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="-24dp"
-                android:text="Redirecting to Login in 4"
+                android:text="Direct to where?"
                 android:textSize="14dp"
                 android:textAlignment="center"/>
         </LinearLayout>
