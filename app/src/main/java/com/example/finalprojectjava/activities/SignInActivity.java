@@ -21,7 +21,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.database.DatabaseHelper;
+import com.example.finalprojectjava.data.Database;
 import com.example.finalprojectjava.helper.PasswordHashHelper;
 import com.example.finalprojectjava.helper.PrefsHelper;
 import com.example.finalprojectjava.helper.SnackBarHelper;
@@ -42,7 +42,7 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_signing_in);
+        setContentView(R.layout.activity_sign_in);
 
         // Assign widgets from XML
         et_first_name = findViewById(R.id.inputFirstName);
@@ -250,8 +250,8 @@ public class SignInActivity extends AppCompatActivity {
                 user.setUser_pass(PasswordHashHelper.getInstance().passwordHasher(user.getUser_pass()));
 
                 // Checks if creating an account is complete and successful and store user in database
-                DatabaseHelper databaseHelper = new DatabaseHelper(this);
-                boolean success = databaseHelper.createUserAccount(user);
+                Database database = new Database(this);
+                boolean success = database.createUserAccount(user);
                 Log.e(TAG, "Creating account status: " + success);
 
                 // If creating an account is success

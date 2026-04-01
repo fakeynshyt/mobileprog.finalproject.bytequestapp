@@ -27,7 +27,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.database.DatabaseHelper;
+import com.example.finalprojectjava.data.Database;
 import com.example.finalprojectjava.helper.NotificationHelper;
 import com.example.finalprojectjava.helper.PrefsHelper;
 import com.example.finalprojectjava.helper.SnackBarHelper;
@@ -48,7 +48,7 @@ public class PasswordVerificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_forgot_password_verification_activity);
+        setContentView(R.layout.activity_password_verification);
 
         // Assign widgets from XML
         send_btn = findViewById(R.id.sendBtn);
@@ -135,7 +135,7 @@ public class PasswordVerificationActivity extends AppCompatActivity {
             }
             try {
                 // Returns user from database if email input matches
-                DatabaseHelper db = new DatabaseHelper(this);
+                Database db = new Database(this);
                 User userExists = db.getUserByEmail(email);
 
                 // Generates random number for otp code

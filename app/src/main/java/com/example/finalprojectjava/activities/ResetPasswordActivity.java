@@ -24,7 +24,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.database.DatabaseHelper;
+import com.example.finalprojectjava.data.Database;
 import com.example.finalprojectjava.helper.PasswordHashHelper;
 import com.example.finalprojectjava.helper.PrefsHelper;
 import com.example.finalprojectjava.helper.SnackBarHelper;
@@ -43,7 +43,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_forgot_password_edit);
+        setContentView(R.layout.activity_reset_password);
 
         // Assign widgets from XML
         et_new_pass = findViewById(R.id.inputNewPass);
@@ -184,7 +184,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     + "\nNew password: " + newPlainPass);
 
             try {
-                DatabaseHelper db = new DatabaseHelper(this);
+                Database db = new Database(this);
 
                 // Return user object from database using UserManager
                 User user = db.getUserByEmail(UserManager.getInstance().getCurrentUser().getUser_email());

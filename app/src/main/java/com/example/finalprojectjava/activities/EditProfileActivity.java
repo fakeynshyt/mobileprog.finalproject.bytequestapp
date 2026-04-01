@@ -24,7 +24,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.database.DatabaseHelper;
+import com.example.finalprojectjava.data.Database;
 import com.example.finalprojectjava.manager.SessionManager;
 import com.example.finalprojectjava.manager.UserManager;
 import com.example.finalprojectjava.models.User;
@@ -36,35 +36,31 @@ public class EditProfileActivity extends AppCompatActivity {
     LinearLayout dateBirthPicker;
     TextView displayDate, skipClick;
     Button saveProfile;
-
     ImageView goBackClick;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_edit_profile);
 
-        // ***** EditText variables assigned
+        // Assign widgets from XML
         inputFullName = findViewById(R.id.inputFullName);
         inputAddress = findViewById(R.id.inputAddress);
         inputUsername = findViewById(R.id.inputUsername);
 
-        // ***** CheckBox variables assigned
         male = findViewById(R.id.cbMale);
-        female = findViewById(R.id.cbFemale);
+        female = findViewById(R.id.cbFemale);;
 
-        male.setChecked(true);
-
-        // ***** LinearLayout variable assigned
         dateBirthPicker = findViewById(R.id.dateOfBirthPicker);
 
-        // ***** TextView variables assigned
         displayDate = findViewById(R.id.inputDate);
         skipClick = findViewById(R.id.skipClick);
 
-        // ***** ImageView variable assigned
         goBackClick = findViewById(R.id.goBackClick);
+
+        male.setChecked(true);
+        inputFullName.setKeyListener(null);
 
         inputFullName.setText(UserManager.getInstance().getCurrentUser().getFull_name());
 
@@ -155,7 +151,7 @@ public class EditProfileActivity extends AppCompatActivity {
             currentUser.setAddress(address);
         }
 
-        DatabaseHelper dbHelper = new DatabaseHelper(this);
+        Database dbHelper = new Database(this);
         int user_id = currentUser.getUser_id();
         dbHelper.updateUserProfile(user_id, username, gender, birthDate, address);
 

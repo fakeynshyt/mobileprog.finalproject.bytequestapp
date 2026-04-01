@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +13,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.database.DatabaseHelper;
+import com.example.finalprojectjava.data.Database;
 import com.example.finalprojectjava.manager.UserManager;
 import com.example.finalprojectjava.models.Subject;
 
@@ -35,7 +34,7 @@ public class LessonActivity extends AppCompatActivity {
         testText = findViewById(R.id.testViewText);
 
         testBtn.setOnClickListener(v -> {
-            DatabaseHelper dbHelper = new DatabaseHelper(this);
+            Database dbHelper = new Database(this);
             List<Subject> viewAllSubs = dbHelper.getAllSubjects();
 
             testText.setText(viewAllSubs.toString());

@@ -18,7 +18,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.database.DatabaseHelper;
+import com.example.finalprojectjava.data.Database;
 import com.example.finalprojectjava.helper.PrefsHelper;
 import com.example.finalprojectjava.helper.SnackBarHelper;
 import com.example.finalprojectjava.manager.SessionManager;
@@ -33,7 +33,7 @@ public class StartUpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_startup);
 
         // Assign widgets from XML
         btn_login = findViewById(R.id.loginBtn);
@@ -54,7 +54,7 @@ public class StartUpActivity extends AppCompatActivity {
 
         // Checks if saved email is null or not null
         if(savedEmail != null) {
-            DatabaseHelper dbHelper = new DatabaseHelper(this);
+            Database dbHelper = new Database(this);
             SessionManager session = new SessionManager(this, savedEmail);
             boolean loggedIn = session.isRemembered();
             boolean hasUser = dbHelper.hasUserAccount();

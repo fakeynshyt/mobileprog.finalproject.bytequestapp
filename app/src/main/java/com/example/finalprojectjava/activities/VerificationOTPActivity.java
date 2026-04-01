@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -44,7 +45,7 @@ public class VerificationOTPActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_forgot_password_otpactivity);
+        setContentView(R.layout.activity_verification_otp);
 
         // Assign widgets from XML
         et_otp_1 = findViewById(R.id.otp1ET);
@@ -73,15 +74,10 @@ public class VerificationOTPActivity extends AppCompatActivity {
         });
 
         // Set up OTP fields
-        setupOTPField(et_otp_1, et_otp_2);
-        setupOTPField(et_otp_2, et_otp_3);
-        setupOTPField(et_otp_3, et_otp_4);
-        setupOTPField(et_otp_4, null);
+        setupOTPFields(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
 
         // Remove OTP fields
-        removeOTPField(et_otp_4, et_otp_3);
-        removeOTPField(et_otp_3, et_otp_2);
-        removeOTPField(et_otp_2, et_otp_1);
+        removeOTPFields(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
 
         // Checks if otp counter is currently threading
         PrefsHelper prefsHelper = new PrefsHelper(this);
@@ -92,18 +88,9 @@ public class VerificationOTPActivity extends AppCompatActivity {
 
         // Verify code
         btn_verify.setOnClickListener(v -> {
+            setButtonEnabled(false);
 
-            InputMethodManager imm1 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm1.hideSoftInputFromWindow(et_otp_1.getWindowToken(), 0);
-
-            InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm2.hideSoftInputFromWindow(et_otp_2.getWindowToken(), 0);
-
-            InputMethodManager imm3 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm3.hideSoftInputFromWindow(et_otp_3.getWindowToken(), 0);
-
-            InputMethodManager imm4 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm4.hideSoftInputFromWindow(et_otp_4.getWindowToken(), 0);
+            hideKeyboard(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
 
             if(et_otp_1.getText().toString().isEmpty()
                     || et_otp_2.getText().toString().isEmpty()
@@ -117,73 +104,7 @@ public class VerificationOTPActivity extends AppCompatActivity {
                 if(et_otp_3.getText().toString().isEmpty()) et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
                 if(et_otp_4.getText().toString().isEmpty()) et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
 
-                et_otp_1.addTextChangedListener(new TextWatcher() {
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                    }
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
-
-                et_otp_2.addTextChangedListener(new TextWatcher() {
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                    }
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
-
-                et_otp_3.addTextChangedListener(new TextWatcher() {
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                    }
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
-
-                et_otp_4.addTextChangedListener(new TextWatcher() {
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                    }
-
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
+                addTextListeners(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
 
                 return;
             }
@@ -214,89 +135,17 @@ public class VerificationOTPActivity extends AppCompatActivity {
 
                     SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid OTP code");
 
-                    et_otp_1.setText("");
-                    et_otp_2.setText("");
-                    et_otp_3.setText("");
-                    et_otp_4.setText("");
+                    EditText[] editTexts = {et_otp_1, et_otp_2, et_otp_3, et_otp_4};
 
-                    et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
-                    et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
-                    et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
-                    et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
+                    setTextToNull(editTexts);
 
-                    et_otp_1.addTextChangedListener(new TextWatcher() {
+                    setErrorFields(editTexts);
 
-                        @Override
-                        public void afterTextChanged(Editable s) {
-                            et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        }
+                    addTextListeners(editTexts);
 
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                    setEditTextsEnabled(true ,editTexts);
 
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                    });
-
-                    et_otp_2.addTextChangedListener(new TextWatcher() {
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-                            et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        }
-
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                    });
-
-                    et_otp_3.addTextChangedListener(new TextWatcher() {
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-                            et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        }
-
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                    });
-
-                    et_otp_4.addTextChangedListener(new TextWatcher() {
-
-                        @Override
-                        public void afterTextChanged(Editable s) {
-                            et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                            et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
-                        }
-
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                    });
-
-                    et_otp_1.setKeyListener(new EditText(this).getKeyListener());
-                    et_otp_2.setKeyListener(new EditText(this).getKeyListener());
-                    et_otp_3.setKeyListener(new EditText(this).getKeyListener());
-                    et_otp_4.setKeyListener(new EditText(this).getKeyListener());
-
+                    setButtonEnabled(true);
                     et_otp_1.requestFocus();
                 }, 1000);
             }
@@ -304,41 +153,53 @@ public class VerificationOTPActivity extends AppCompatActivity {
     }
 
     // private methods
-    private void setupOTPField(EditText current, EditText next) {
-        current.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void afterTextChanged(Editable s) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() == 1 && next != null) {
-                    next.requestFocus();
-                } else if(s.length() > 1) {
-                    int lastChar = s.length() - 1;
-                    current.setText(String.valueOf(s.charAt(lastChar)));
-                    current.setSelection(current.getText().length());
-                } else if(s.length() == 1 && next == null){
-                    current.clearFocus();
-                    btn_verify.performClick();
-                    et_otp_1.setKeyListener(null);
-                    et_otp_2.setKeyListener(null);
-                    et_otp_3.setKeyListener(null);
-                    et_otp_4.setKeyListener(null);
+    private void setupOTPFields(EditText... editTexts) {
+        for(int i = 0; i < editTexts.length; i++) {
+            EditText current = editTexts[i];
+            EditText next = (i < editTexts.length - 1) ? editTexts[i + 1] : null;
+            current.addTextChangedListener(new TextWatcher() {
+                @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override public void afterTextChanged(Editable s) {
+                    if(next == null){
+                        current.clearFocus();
+                        btn_verify.performClick();
+                        setEditTextsEnabled(false ,editTexts);
+                    }
                 }
-            }
-        });
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if(s.length() == 1 && next != null) {
+                        current.setSelection(current.getText().length());
+                    } else if(s.length() > 1 && next != null) {
+                        int lastChar = s.length() - 1;
+                        current.setText(String.valueOf(s.charAt(0)));
+                        next.requestFocus();
+                        next.setText(String.valueOf(s.charAt(lastChar)));
+                    }
+                }
+            });
+        }
+
     }
 
-    private void removeOTPField(EditText current, EditText prev) {
-        current.addTextChangedListener(new TextWatcher() {
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-            @Override public void afterTextChanged(Editable s) {}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length() == 0 && prev != null) {
-                    prev.requestFocus();
+    private void removeOTPFields(EditText... editTexts) {
+        for(int i = 0; i < editTexts.length; i++) {
+            EditText current = editTexts[i];
+            EditText prev = (i > 0) ? editTexts[i - 1] : null;
+
+            current.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {}
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if(s.length() == 0 && prev != null) {
+                        prev.requestFocus();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     private void otpCodeCounter(long timer) {
@@ -433,5 +294,69 @@ public class VerificationOTPActivity extends AppCompatActivity {
         }
 
         dialog.show();
+    }
+
+    private void addTextListeners(EditText... editTexts) {
+        for(EditText edit : editTexts) {
+            edit.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void afterTextChanged(Editable s) {
+                    setDefaultFields(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
+                }
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            });
+        }
+    }
+
+    private void setErrorFields(EditText... editTexts) {
+        for(EditText edit : editTexts) {
+            edit.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
+        }
+    }
+
+    private void setDefaultFields(EditText... editTexts) {
+        for(EditText edit : editTexts) {
+            edit.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+        }
+    }
+
+    private void hideKeyboard(EditText... editTexts) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        for(EditText edit : editTexts) {
+            imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
+        }
+    }
+
+    private void reEnableEditTexts(EditText... editTexts) {
+        for(EditText edit : editTexts) {
+            edit.setKeyListener(new EditText(this).getKeyListener());
+        }
+    }
+
+    private void setEditTextsEnabled(boolean status, EditText... editTexts) {
+        for(EditText edit : editTexts) {
+            edit.setEnabled(status);
+        }
+    }
+
+    private void setTextToNull(EditText... editTexts) {
+        for(EditText edit : editTexts) {
+            edit.setText(null);
+        }
+    }
+
+    private void setButtonEnabled(boolean status) {
+        if(status) {
+            btn_verify.setEnabled(true);
+            btn_verify.setTextColor(Color.parseColor("#FFFFFFFF"));
+            btn_verify.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6725C7")));
+        } else {
+            btn_verify.setEnabled(false);
+            btn_verify.setTextColor(Color.parseColor("#BEB2C8"));
+            btn_verify.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#69499E")));
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.finalprojectjava.database;
+package com.example.finalprojectjava.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,17 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import androidx.annotation.Nullable;
-
-import com.example.finalprojectjava.manager.SessionManager;
-import com.example.finalprojectjava.manager.UserManager;
 import com.example.finalprojectjava.models.Subject;
 import com.example.finalprojectjava.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+public class Database extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "bytequest.db";
     private static final int DATABASE_VERSION = 1;
@@ -67,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String GAME_SCORE = "GAME_SCORE";
 
 
-    public DatabaseHelper(Context context) {
+    public Database(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -75,7 +71,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // ******CREATE USER TABLE*******
-        String CREATE_TABLE_USERS = "CREATE TABLE " + USER_TABLE + " ("
+        String CREATE_TABLE_USER = "CREATE TABLE " + USER_TABLE + " ("
                 + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COLUMN_USER_FIRST_NAME + " TEXT, "
                 + COLUMN_USER_LAST_NAME + " TEXT, "
@@ -88,11 +84,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + COLUMN_LEVEL + " INTEGER, "
                 + COLUMN_EXP + " INTEGER)";
 
+        // ******CREATE SUBJECT TABLE*******
         String CREATE_TABLE_SUBJECT = "CREATE TABLE " + SUBJECT_TABLE + " ("
                 + SUBJECT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + SUBJECT_NAME + " TEXT,"
                 + SUBJECT_DESCRIPTION + " TEXT)";
 
+        // ******CREATE MODULE TABLE*******
         String CREATE_TABLE_MODULE = "CREATE TABLE " + MODULE_TABLE + " ("
                 + MODULE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + MODULE_NAME + " TEXT, "
@@ -102,6 +100,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "FOREIGN KEY(" + MODULE_USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "),"
                 + "FOREIGN KEY(" + MODULE_SUBJECT_ID + ") REFERENCES " + SUBJECT_TABLE + "(" + SUBJECT_ID + "))";
 
+        // ******CREATE PROGRESS TABLE*******
         String CREATE_TABLE_PROGRESS = "CREATE TABLE " + PROGRESS_TABLE + " ("
                 + PROGRESS_MODULE_ID + " INTEGER UNIQUE, "
                 + PROGRESS_USER_ID + " INTEGER UNIQUE, "
@@ -109,19 +108,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "FOREIGN KEY(" + PROGRESS_USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "),"
                 + "FOREIGN KEY(" + PROGRESS_MODULE_ID + ") REFERENCES " + MODULE_TABLE + "(" + MODULE_ID + "))";
 
-
-        String CREATE_TABLE_GAME_TABLE = "CREATE TABLE " + GAME_TABLE + " ("
+        // ******CREATE GAME TABLE*******
+        String CREATE_TABLE_GAME = "CREATE TABLE " + GAME_TABLE + " ("
                 + GAME_USER_ID + " INTEGER UNIQUE, "
                 + GAME_NAME + " TEXT, "
                 + GAME_DESCRIPTION + " TEXT, "
                 + GAME_SCORE + " INTEGER, "
                 + "FOREIGN KEY(" + GAME_USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "))";
 
-        db.execSQL(CREATE_TABLE_USERS);
+        db.execSQL(CREATE_TABLE_USER);
         db.execSQL(CREATE_TABLE_SUBJECT);
         db.execSQL(CREATE_TABLE_MODULE);
         db.execSQL(CREATE_TABLE_PROGRESS);
-        db.execSQL(CREATE_TABLE_GAME_TABLE);
+        db.execSQL(CREATE_TABLE_GAME);
 
         insertDefaultSubject(db);
     }
@@ -166,17 +165,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             User user = new User();
-            user.setUser_id(cursor.getInt(cursor.getColumnIndexOrThrow(USER_ID)));
-            user.setUser_email(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_EMAIL)));
-            user.setUser_pass(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_PASS)));
-            user.setFirst_name(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_FIRST_NAME)));
-            user.setLast_name(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_LAST_NAME)));
-            user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME)));
-            user.setGender(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GENDER)));
-            user.setBirth_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIRTH_DATE)));
-            user.setAddress(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDRESS)));
-            user.setLevel(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_LEVEL)));
-            user.setExp(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_EXP)));
+            user.setUser_id(cursor.getInt(0));
+            user.setFirst_name(cursor.getString(1));
+            user.setLast_name(cursor.getString(2));
+            user.setUser_email(cursor.getString(3));
+            user.setUser_pass(cursor.getString(4));
+            user.setUsername(cursor.getString(5));
+            user.setGender(cursor.getString(6));
+            user.setBirth_date(cursor.getString(7));
+            user.setAddress(cursor.getString(8));
+            user.setLevel(cursor.getInt(9));
+            user.setExp(cursor.getInt(10));
 
             cursor.close();
             return user;
@@ -193,16 +192,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             User user = new User();
-            user.setUser_id(cursor.getInt(cursor.getColumnIndexOrThrow(USER_ID)));
-            user.setUser_email(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_EMAIL)));
-            user.setUser_pass(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_PASS)));
-            user.setFirst_name(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USER_FIRST_NAME)));
-            user.setUsername(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_USERNAME)));
-            user.setGender(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GENDER)));
-            user.setBirth_date(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_BIRTH_DATE)));
-            user.setAddress(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ADDRESS)));
-            user.setLevel(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_LEVEL)));
-            user.setExp(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_EXP)));
+            user.setUser_id(cursor.getInt(0));
+            user.setUser_email(cursor.getString(1));
+            user.setUser_pass(cursor.getString(2));
+            user.setFirst_name(cursor.getString(3));
+            user.setLast_name(cursor.getString(4));
+            user.setUsername(cursor.getString(5));
+            user.setGender(cursor.getString(6));
+            user.setBirth_date(cursor.getString(7));
+            user.setAddress(cursor.getString(8));
+            user.setLevel(cursor.getInt(9));
+            user.setExp(cursor.getInt(10));
 
             cursor.close();
             return user;

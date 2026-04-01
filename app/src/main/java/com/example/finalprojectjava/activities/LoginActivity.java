@@ -24,7 +24,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.database.DatabaseHelper;
+import com.example.finalprojectjava.data.Database;
 import com.example.finalprojectjava.helper.PasswordHashHelper;
 import com.example.finalprojectjava.helper.PrefsHelper;
 import com.example.finalprojectjava.helper.SnackBarHelper;
@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_logging_in);
+        setContentView(R.layout.activity_login);
 
         // Assign widgets from XML
         btn_login = findViewById(R.id.loginBtn);
@@ -150,8 +150,8 @@ public class LoginActivity extends AppCompatActivity {
 
             // Open database connection and login user
             try {
-                DatabaseHelper databaseHelper = new DatabaseHelper(this);
-                User user = databaseHelper.loginUser(et_email.getText().toString());
+                Database database = new Database(this);
+                User user = database.loginUser(et_email.getText().toString());
 
                 String userExisting = user.getUser_email();
 
