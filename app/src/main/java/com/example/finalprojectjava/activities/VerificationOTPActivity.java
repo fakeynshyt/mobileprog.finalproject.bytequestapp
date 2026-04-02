@@ -40,6 +40,7 @@ public class VerificationOTPActivity extends AppCompatActivity {
     EditText et_otp_1, et_otp_2, et_otp_3, et_otp_4;
     Button btn_verify;
     TextView txt_display_user, txt_resend_code, txt_code_counter;
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class VerificationOTPActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_verification_otp);
 
-        // Assign widgets from XML
+        // Assign widgets
         et_otp_1 = findViewById(R.id.otp1ET);
         et_otp_2 = findViewById(R.id.otp2ET);
         et_otp_3 = findViewById(R.id.otp3ET);
@@ -60,11 +61,8 @@ public class VerificationOTPActivity extends AppCompatActivity {
         txt_code_counter = findViewById(R.id.counterTxt);
 
         String hideUserAccount = hideUserAccount(UserManager.getInstance().getCurrentUser().getUser_email());
-
-        // Sets display user to the UI
         txt_display_user.setText(hideUserAccount);
 
-        // Autofocus otp fields
         et_otp_1.requestFocus();
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -73,25 +71,29 @@ public class VerificationOTPActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Set up OTP fields
         setupOTPFields(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
-
-        // Remove OTP fields
         removeOTPFields(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
 
-        // Checks if otp counter is currently threading
         PrefsHelper prefsHelper = new PrefsHelper(this);
         long expiry = prefsHelper.getLong("otp_expiry_key", 0);
-
-        // Starts counter thread
         otpCodeCounter(expiry);
 
-        // Verify code
         btn_verify.setOnClickListener(v -> {
             setButtonEnabled(false);
-
             hideKeyboard(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
+            setDefaultFields(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
 
+            new Handler().postDelayed(() -> {
+                verifyOTP(true);
+                setButtonEnabled(true);
+            }, 100);
+        });
+    }
+
+    private void verifyOTP(boolean checkEmpty) {
+        PrefsHelper prefsHelper = new PrefsHelper(this);
+
+        if (checkEmpty) {
             if(et_otp_1.getText().toString().isEmpty()
                     || et_otp_2.getText().toString().isEmpty()
                     || et_otp_3.getText().toString().isEmpty()
@@ -99,73 +101,69 @@ public class VerificationOTPActivity extends AppCompatActivity {
 
                 SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "OTP code cannot be empty");
 
-                if(et_otp_1.getText().toString().isEmpty()) et_otp_1.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
-                if(et_otp_2.getText().toString().isEmpty()) et_otp_2.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
-                if(et_otp_3.getText().toString().isEmpty()) et_otp_3.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
-                if(et_otp_4.getText().toString().isEmpty()) et_otp_4.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
+                if(et_otp_1.getText().toString().isEmpty()) et_otp_1.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+                if(et_otp_2.getText().toString().isEmpty()) et_otp_2.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+                if(et_otp_3.getText().toString().isEmpty()) et_otp_3.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+                if(et_otp_4.getText().toString().isEmpty()) et_otp_4.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
 
                 addTextListeners(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
-
                 return;
             }
+        }
 
-            // Gets the otp code from prefs key
-            int code = prefsHelper.getInt("otp_code_key", 0);
+        int code = prefsHelper.getInt("otp_code_key", 0);
 
-            // Gets all the otp fields and converts to string
-            String otpField = et_otp_1.getText().toString()
-                    + et_otp_2.getText().toString()
-                    + et_otp_3.getText().toString()
-                    + et_otp_4.getText().toString();
+        String otpField = et_otp_1.getText().toString()
+                + et_otp_2.getText().toString()
+                + et_otp_3.getText().toString()
+                + et_otp_4.getText().toString();
 
-            // Checks if otpField matches to the notification code
-            if(checkCode(otpField, String.valueOf(code))) {
-                new Handler().postDelayed(() -> {
-                    SnackBarHelper.showSuccessSnackBar(findViewById(R.id.main), "OTP code successfully verified!");
-                }, 1000);
-                new Handler().postDelayed(() -> {
-                    SnackBarHelper.showInfoSnackBar(findViewById(R.id.main), "Redirecting to reset password...");
-                }, 4500);
-                new Handler().postDelayed(() -> {
-                    startActivity(new Intent(VerificationOTPActivity.this, ResetPasswordActivity.class));
-                    finish();
-                }, 7500);
-            } else {
-                new Handler().postDelayed(() -> {
+        if(checkCode(otpField, String.valueOf(code))) {
+            new Handler().postDelayed(() -> {
+                SnackBarHelper.showSuccessSnackBar(findViewById(R.id.main), "OTP code successfully verified!");
+            }, 2500);
 
-                    SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid OTP code");
+            new Handler().postDelayed(() -> {
+                SnackBarHelper.showInfoSnackBar(findViewById(R.id.main), "Redirecting to reset password...");
+            }, 4500);
 
-                    EditText[] editTexts = {et_otp_1, et_otp_2, et_otp_3, et_otp_4};
+            new Handler().postDelayed(() -> {
+                startActivity(new Intent(this, ResetPasswordActivity.class));
+                finish();
+            }, 6500);
+        } else {
+            SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid OTP code");
 
-                    setTextToNull(editTexts);
+            EditText[] editTexts = {et_otp_1, et_otp_2, et_otp_3, et_otp_4};
 
-                    setErrorFields(editTexts);
-
-                    addTextListeners(editTexts);
-
-                    setEditTextsEnabled(true ,editTexts);
-
-                    setButtonEnabled(true);
-                    et_otp_1.requestFocus();
-                }, 1000);
-            }
-        });
+            setTextToNull(editTexts);
+            setErrorFields(editTexts);
+            addTextListeners(editTexts);
+            setEditTextsEnabled(true ,editTexts);
+            setButtonEnabled(true);
+            et_otp_1.requestFocus();
+        }
     }
 
-    // private methods
     private void setupOTPFields(EditText... editTexts) {
         for(int i = 0; i < editTexts.length; i++) {
             EditText current = editTexts[i];
             EditText next = (i < editTexts.length - 1) ? editTexts[i + 1] : null;
+
             current.addTextChangedListener(new TextWatcher() {
                 @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                @Override public void afterTextChanged(Editable s) {
-                    if(next == null){
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if(next == null && s.length() == 1) {
                         current.clearFocus();
-                        btn_verify.performClick();
                         setEditTextsEnabled(false ,editTexts);
+                        new Handler().postDelayed(() -> {
+                            verifyOTP(false);
+                        }, 1000);
                     }
                 }
+
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if(s.length() == 1 && next != null) {
@@ -179,7 +177,6 @@ public class VerificationOTPActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
 
     private void removeOTPFields(EditText... editTexts) {
@@ -188,10 +185,9 @@ public class VerificationOTPActivity extends AppCompatActivity {
             EditText prev = (i > 0) ? editTexts[i - 1] : null;
 
             current.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void afterTextChanged(Editable s) {}
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override public void afterTextChanged(Editable s) {}
+                @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if(s.length() == 0 && prev != null) {
@@ -258,68 +254,67 @@ public class VerificationOTPActivity extends AppCompatActivity {
 
     private String hideUserAccount(String email) {
         int charLength = email.length();
-
-        int removeLength = email.length() >= 13 && email.length() <= 17 ? 1 : (email.length() >= 18 && email.length() <= 19 ? 2 : (email.length() >= 20 && email.length() <= 22 ? 4 : 5));
-
-        Log.e(TAG, "Remove length: " + removeLength);
+        int lengthTo = 1;
+        for(int i = 0; i < charLength; i++) {
+            if(i <= email.indexOf("@")) {
+                if(i > 4) lengthTo++;
+            }
+        }
+        Log.e(TAG, "lengthTo: " + lengthTo);
 
         StringBuilder transformed = new StringBuilder();
         for(int i = 0; i < charLength; i++) {
-            if(i <= email.indexOf("@") - removeLength) {
-                transformed.append(String.valueOf(email.charAt(i)));
+            if(i <= email.indexOf("@") - lengthTo) {
+                transformed.append(email.charAt(i));
             } else if(i >= charLength - 4) {
-                transformed.append(String.valueOf(email.charAt(i)));
+                transformed.append(email.charAt(i));
             } else {
                 transformed.append("*");
             }
         }
         return String.valueOf(transformed);
     }
+
     @Override
     public void onBackPressed() {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE);
-        drawable.setCornerRadius(15f); // corner radius in pixels
-        drawable.setColor(Color.WHITE); // background color
+        drawable.setCornerRadius(15f);
+        drawable.setColor(Color.WHITE);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_bytequest_logo_alt)
                 .setTitle("Hold on!")
                 .setMessage("You forgot your password. Leaving now means you can’t log in. Do you want to cancel?")
-                .setPositiveButton("Yes", (dialogOpen, which) -> super.onBackPressed())
+                .setPositiveButton("Yes", (d, which) -> super.onBackPressed())
                 .setNegativeButton("No", null)
                 .create();
 
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(drawable);
-        }
-
+        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(drawable);
         dialog.show();
     }
 
     private void addTextListeners(EditText... editTexts) {
         for(EditText edit : editTexts) {
             edit.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void afterTextChanged(Editable s) {
+                @Override public void afterTextChanged(Editable s) {
                     setDefaultFields(et_otp_1, et_otp_2, et_otp_3, et_otp_4);
                 }
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+                @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
             });
         }
     }
 
     private void setErrorFields(EditText... editTexts) {
         for(EditText edit : editTexts) {
-            edit.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_err));
+            edit.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
         }
     }
 
     private void setDefaultFields(EditText... editTexts) {
         for(EditText edit : editTexts) {
-            edit.setBackground(ContextCompat.getDrawable(VerificationOTPActivity.this, R.drawable.bg_background_edittext_otp));
+            edit.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_otp));
         }
     }
 
@@ -327,12 +322,6 @@ public class VerificationOTPActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         for(EditText edit : editTexts) {
             imm.hideSoftInputFromWindow(edit.getWindowToken(), 0);
-        }
-    }
-
-    private void reEnableEditTexts(EditText... editTexts) {
-        for(EditText edit : editTexts) {
-            edit.setKeyListener(new EditText(this).getKeyListener());
         }
     }
 

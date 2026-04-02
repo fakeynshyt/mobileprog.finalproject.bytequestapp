@@ -1,159 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.LoginActivity"
     android:background="@drawable/bg_background_3"
-    android:orientation="vertical">
+    tools:context=".activities.LoginActivity">
+
+    <!-- Guidelines for side margins -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
+    <!-- Guidelines for vertical spacing -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineContentTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.16005471" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineLoginContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.23005471" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineContentBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.55" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineButtonContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.7503268" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.90" />
+
+    <!-- Logo -->
+
+    <!-- Welcome Message -->
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_bytequest_logo" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineContentBottom"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@+id/guidelineLoginContent" >
 
-        <LinearLayout
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Email"
+            android:textColor="@color/lightGray"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/emailInput"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp"
+            android:background="@drawable/bg_background_edittext"
+            android:drawableStart="@drawable/ic_email"
+            android:ems="10"
+            android:hint="johndoe@bytequest.com"
+            android:inputType="text"
+            android:padding="12dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/lightGray" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
-                app:srcCompat="@drawable/ic_bytequest_logo" />
-        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Password"
+            android:textColor="@color/lightGray"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
+        <EditText
+            android:id="@+id/passwordInput"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_background_edittext"
+            android:drawableStart="@drawable/ic_email"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:padding="12dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/lightGray" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="68dp"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Welcome back!"
-                android:textSize="32dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:layout_marginLeft="-156dp"
-                android:text="Email"
-                android:textSize="16dp"
-                android:textColor="@color/lightGray"
-                android:textStyle="bold"/>
-            <EditText
-                android:id="@+id/emailInput"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:padding="12dp"
-                android:ems="10"
-                android:inputType="text"
-                android:textColor="@color/white"
-                android:hint="johndoe@bytequest.com"
-                android:drawableStart="@drawable/ic_email"
-                android:textColorHint="@color/lightGray"
-                android:background="@drawable/bg_background_edittext"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="-140dp"
-                android:text="Password"
-                android:textSize="16dp"
-                android:textColor="@color/lightGray"
-                android:textStyle="bold"/>
-
-            <EditText
-                android:id="@+id/passwordInput"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:padding="12dp"
-                android:ems="10"
-                android:inputType="textPassword"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/ic_locked"
-                android:background="@drawable/bg_background_edittext"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:orientation="horizontal">
 
             <CheckBox
                 android:id="@+id/rememberMeCb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingRight="25dp"
                 android:text="Remember me"
-                android:textColor="@color/lightGray"
-                android:backgroundTint="@color/purple"
-                app:useMaterialThemeColors="true"/>
-
-            <TextView
-                android:id="@+id/forgotPassClick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="65dp"
-                android:text="Forgot password?"
-                android:textStyle="bold"
-                android:textColor="@color/lightGray"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/loginBtn"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:layout_marginTop="130dp"
-                android:backgroundTint="@color/purple"
-                android:text="Login"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textColor="@color/white"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="45dp"
-                android:gravity="center"
-
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:gravity="center|right">
 
                 <TextView
+                    android:id="@+id/forgotPassClick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Doesn't have an account? "
-                    android:textColor="@color/purple"/>
-                <TextView
-                    android:id="@+id/signInClick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Create now!"
-                    android:textColor="@color/purple"
+                    android:text="Forgot Password?"
+                    android:textColor="@color/white"
                     android:textStyle="bold"/>
             </LinearLayout>
         </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/tvWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Welcome back!"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineContentTop" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginBtn"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/purple"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/llFooter"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@+id/guidelineButtonContent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/llFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineButtonContent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Doesn't have an account? "
+            android:textColor="@color/purple" />
+
+        <TextView
+            android:id="@+id/signInClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create now!"
+            android:textColor="@color/purple"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

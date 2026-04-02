@@ -1,102 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activities.SuccessActivity"
-    android:background="@drawable/bg_background_9">
+    android:background="@drawable/bg_background_9"
+    tools:context=".activities.SuccessActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <!-- Guidelines for side margins -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+    <!-- Guideline for top padding -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02" />
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="86dp"
-                    android:layout_height="86dp"
-                    app:srcCompat="@drawable/ic_bytequest_logo"/>
-            </LinearLayout>
-        </LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineContentTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.18" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:gravity="bottom">
+    <!-- Guideline for centering content vertically if needed -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineContentBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.463" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+    <!-- Logo -->
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        app:srcCompat="@drawable/ic_bytequest_logo" />
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:layout_width="198dp"
-                    android:layout_height="184dp"
-                    app:lottie_autoPlay="true"
-                    app:lottie_fileName="lottie_success.json"
-                    app:lottie_loop="true" />
-            </LinearLayout>
-        </LinearLayout>
+    <!-- Success Animation -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/successAnimation"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineContentBottom"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@+id/guidelineContentTop"
+        app:layout_constraintWidth_percent="0.5"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="lottie_success.json"
+        app:lottie_loop="true" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+    <!-- Text Content -->
 
-            <TextView
-                android:id="@+id/titleTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Title here!"
-                android:textSize="24dp"
-                android:textColor="@color/darkGray"/>
+    <!-- Loading Section -->
 
-            <TextView
-                android:id="@+id/descTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Description here!"
-                android:textSize="14dp"
-                android:textAlignment="center"/>
-        </LinearLayout>
+    <TextView
+        android:id="@+id/titleTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Title here!"
+        android:textColor="@color/darkGray"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/successAnimation" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:orientation="vertical"
-            android:gravity="center">
+    <TextView
+        android:id="@+id/descTxt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Description here!"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/titleTxt" />
 
-            <com.airbnb.lottie.LottieAnimationView
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="lottie_loading.json"
-                app:lottie_loop="true" />
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loadingAnimation"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/descTxt"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="lottie_loading.json"
+        app:lottie_loop="true" />
 
-            <TextView
-                android:id="@+id/whereTxt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="-24dp"
-                android:text="Direct to where?"
-                android:textSize="14dp"
-                android:textAlignment="center"/>
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+    <TextView
+        android:id="@+id/whereTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-16dp"
+        android:text="Direct to where?"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/loadingAnimation" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

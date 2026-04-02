@@ -1,89 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.StartUpActivity"
     android:background="@drawable/bg_background_1"
-    android:orientation="vertical">
+    tools:context=".activities.StartUpActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <!-- Guidelines for side margins -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="86dp"
-                android:layout_height="86dp"
-                app:srcCompat="@drawable/ic_bytequest_logo" />
+    <!-- Guidelines for vertical sections -->
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineSummit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02" />
 
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="330dp"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineContentTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.27" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineContentBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.50066227" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="12sp"
-                    android:text="HELLO"
-                    android:fontFamily="sans-serif-black"
-                    android:textSize="52dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/purple"/>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.95" />
 
-                <TextView
-                    android:layout_width="232dp"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="12sp"
-                    android:text="Best place where you can enjoy and
-learn IT knowledge for free!"
-                    android:textSize="12dp" />
-            </LinearLayout>
-        </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_bytequest_logo" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+    <TextView
+        android:id="@+id/tvHello"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:text="HELLO"
+        android:textColor="@color/purple"
+        android:textSize="52sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@id/guidelineContentTop"
+        app:layout_constraintVertical_bias="0.0" />
 
-            <Button
-                android:id="@+id/loginBtn"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="8dp"
-                android:backgroundTint="@color/purple"
-                android:text="Login"
-                android:textColor="@color/white"
-                android:textSize="20dp"
-                android:textStyle="bold" />
+    <TextView
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:text="Best place where you can enjoy and\nlearn IT knowledge for free!"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@+id/loginBtn"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@+id/guidelineContentTop"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.65" />
 
-            <Button
-                android:id="@+id/signInBtn"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:textSize="20dp"
-                android:text="Sign-in"
-                android:textStyle="bold"
-                android:textColor="@color/purple"
-                android:backgroundTint="@color/white"
-                app:strokeColor="@color/purple"
-                app:strokeWidth="2dp"/>
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+    <Button
+        android:id="@+id/signInBtn"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="116dp"
+        android:backgroundTint="@color/white"
+        android:text="Sign-in"
+        android:textColor="@color/purple"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/guidelineBottom"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@+id/guidelineContentBottom"
+        app:layout_constraintVertical_bias="0.85"
+        app:strokeColor="@color/purple"
+        app:strokeWidth="2dp" />
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="8dp"
+        android:backgroundTint="@color/purple"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/signInBtn"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

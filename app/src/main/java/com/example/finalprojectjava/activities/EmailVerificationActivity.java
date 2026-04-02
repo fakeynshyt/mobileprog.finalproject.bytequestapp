@@ -36,7 +36,7 @@ import com.example.finalprojectjava.models.User;
 
 import java.util.Random;
 
-public class PasswordVerificationActivity extends AppCompatActivity {
+public class EmailVerificationActivity extends AppCompatActivity {
 
     Button send_btn;
     EditText et_email;
@@ -48,7 +48,7 @@ public class PasswordVerificationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_password_verification);
+        setContentView(R.layout.activity_email_verification);
 
         // Assign widgets from XML
         send_btn = findViewById(R.id.sendBtn);
@@ -80,9 +80,7 @@ public class PasswordVerificationActivity extends AppCompatActivity {
 
         // Set text views to null if expiry = 0, if not start counter
         if(System.currentTimeMillis() > expiry) {
-            txt_prompt.setText(null);
-            txt_resend_code.setText(null);
-            txt_counter.setText(null);
+            setTextTo(false, 0);
         } else {
             otpCodeCounter(expiry);
         }
@@ -91,6 +89,8 @@ public class PasswordVerificationActivity extends AppCompatActivity {
         send_btn.setOnClickListener(view -> {
             String email = et_email.getText().toString();
 
+            setButtonEnabled(false);
+
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(et_email.getWindowToken(), 0);
 
@@ -98,20 +98,9 @@ public class PasswordVerificationActivity extends AppCompatActivity {
             // Checks if email is empty
             if(email.isEmpty()) {
                 SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Email cannot be empty");
-
                 et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
-
-                et_email.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_email.setBackground(ContextCompat.getDrawable(PasswordVerificationActivity.this, R.drawable.bg_background_edittext));
-                    }
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
+                addTextListener(et_email);
+                setButtonEnabled(true);
                 return;
             }
 
@@ -119,18 +108,8 @@ public class PasswordVerificationActivity extends AppCompatActivity {
             if(!et_email.getText().toString().endsWith("@bytequest.com")) {
                 SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid email");
                 et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
-
-                et_email.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_email.setBackground(ContextCompat.getDrawable(PasswordVerificationActivity.this, R.drawable.bg_background_edittext));
-                    }
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
+                addTextListener(et_email);
+                setButtonEnabled(true);
                 return;
             }
             try {
@@ -173,25 +152,14 @@ public class PasswordVerificationActivity extends AppCompatActivity {
                         // Starts counter
                         otpCodeCounter(codeExpiry);
 
-                        startActivity(new Intent(PasswordVerificationActivity.this, VerificationOTPActivity.class));
+                        startActivity(new Intent(EmailVerificationActivity.this, VerificationOTPActivity.class));
                         finish();
                     }, 2000);
                 } else {
                     new Handler().postDelayed(() -> {
                         SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "User account is not existing");
-                        et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
-
-                        et_email.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void afterTextChanged(Editable s) {
-                                et_email.setBackground(ContextCompat.getDrawable(PasswordVerificationActivity.this, R.drawable.bg_background_edittext));
-                            }
-                            @Override
-                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                            @Override
-                            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                        });
+                        addTextListener(et_email);
+                        setButtonEnabled(true);
                     }, 500);
                 }
             } catch(Exception e) {
@@ -213,27 +181,61 @@ public class PasswordVerificationActivity extends AppCompatActivity {
                     int secs = (int) (remaining / 1000);
                     secs = secs % 60;
 
-                    txt_prompt.setText("Didn't receive the code?");
-                    txt_resend_code.setText(" Resend");
-                    txt_counter.setText(" - 00:" + String.format("%02d", secs));
-
+                    setTextTo(true, secs);
                     handler.postDelayed(this, 1000);
 
-                    send_btn.setEnabled(false);
-                    send_btn.setTextColor(Color.parseColor("#BEB2C8"));
-                    send_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#69499E")));
+                    setButtonEnabled(false);
 
                     if(secs <= 0) {
-                        txt_prompt.setText(null);
-                        txt_counter.setText(null);
-                        txt_resend_code.setText(null);
-                        send_btn.setEnabled(true);
-                        send_btn.setTextColor(Color.parseColor("#FFFFFFFF"));
-                        send_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6725C7")));
+                        setTextTo(false, 0);
+                        setButtonEnabled(true);
                     }
                 }
             }
         };
         handler.post(runnable);
     }
+
+    private void addTextListener(EditText editText) {
+        editText.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                et_email.setBackground(ContextCompat.getDrawable(EmailVerificationActivity.this, R.drawable.bg_background_edittext));
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+    }
+
+    private void setButtonEnabled(boolean status) {
+        if(status) {
+            send_btn.setEnabled(true);
+            send_btn.setTextColor(Color.parseColor("#FFFFFFFF"));
+            send_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#6725C7")));
+        } else {
+            send_btn.setEnabled(false);
+            send_btn.setTextColor(Color.parseColor("#BEB2C8"));
+            send_btn.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#69499E")));
+        }
+    }
+
+    private void setTextTo(boolean status, int secs) {
+        if(status) {
+            txt_prompt.setText("Didn't receive the code?");
+            txt_resend_code.setText(" Resend");
+            txt_counter.setText(" - 00:" + String.format("%02d", secs));
+        } else {
+            txt_prompt.setText(null);
+            txt_counter.setText(null);
+            txt_resend_code.setText(null);
+        }
+    }
+
+
 }

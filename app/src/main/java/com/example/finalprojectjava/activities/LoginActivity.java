@@ -46,14 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login);
 
-        // Assign widgets from XML
         btn_login = findViewById(R.id.loginBtn);
-
         et_email = findViewById(R.id.emailInput);
         et_password = findViewById(R.id.passwordInput);
-
         cbx_remember_me = findViewById(R.id.rememberMeCb);
-
         txt_sign_in_click = findViewById(R.id.signInClick);
         txt_forgot_password_click = findViewById(R.id.forgotPassClick);
 
@@ -63,178 +59,110 @@ public class LoginActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Navigate to signing in activity
-        txt_sign_in_click.setOnClickListener(v -> {
-            new Handler().postDelayed(() -> {
-                startActivity(new Intent(LoginActivity.this, SignInActivity.class));
-            }, 500);
-        });
+        txt_sign_in_click.setOnClickListener(v -> startActivity(new Intent(this, SignInActivity.class)));
 
-        // Navigate to forgot password activity
         txt_forgot_password_click.setOnClickListener(v -> {
-            InputMethodManager imm1 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm1.hideSoftInputFromWindow(txt_sign_in_click.getWindowToken(), 0);
-            new Handler().postDelayed(() -> {
-                SnackBarHelper.showInfoSnackBar(findViewById(R.id.main), "Please wait...");
-            }, 800);
-            new Handler().postDelayed(() -> {
-
-                startActivity(new Intent(LoginActivity.this, ResetOptionActivity.class));
-            }, 3500);
+            hideKeyboard(et_email, et_password);
+            SnackBarHelper.showInfoSnackBar(findViewById(R.id.main), "Please wait...");
+            new Handler().postDelayed(() -> startActivity(new Intent(this, ResetOptionActivity.class)), 1500);
         });
 
-        // Login user
-        btn_login.setOnClickListener(v -> {
+        btn_login.setOnClickListener(v -> handleLogin());
+    }
 
-            InputMethodManager imm1 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm1.hideSoftInputFromWindow(et_email.getWindowToken(), 0);
+    private void handleLogin() {
+        hideKeyboard(et_email, et_password);
 
-            InputMethodManager imm2 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm2.hideSoftInputFromWindow(et_password.getWindowToken(), 0);
+        if (isEmpty(et_email, et_password)) {
+            SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Required to fill-up all fields");
+            setErrorFields(et_email, et_password);
+            addTextListeners(et_email, et_password);
+            return;
+        }
 
-            // Checks user input if empty
-            if(et_email.getText().toString().isEmpty() || et_password.getText().toString().isEmpty()) {
+        if (!et_email.getText().toString().endsWith("@bytequest.com")) {
+            SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid email");
+            setErrorFields(et_email);
+            addTextListeners(et_email);
+            return;
+        }
 
-                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Required to fill-up all fields");
+        try {
+            Database database = new Database(this);
+            User user = database.loginUser(et_email.getText().toString());
 
-                if(et_email.getText().toString().isEmpty()) et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
-                if(et_password.getText().toString().isEmpty())et_password.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+            boolean passwordChecker = PasswordHashHelper.getInstance()
+                    .passwordChecker(et_password.getText().toString(), user.getUser_pass());
 
-                et_email.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_email.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.bg_background_edittext));
-                        et_password.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.bg_background_edittext));
-                    }
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
-
-                et_password.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_email.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.bg_background_edittext));
-                        et_password.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.bg_background_edittext));
-                    }
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
-
-                return;
+            if (user.getUser_email() != null && passwordChecker) {
+                loginSuccess(user);
+            } else {
+                loginError("Invalid password", et_password);
             }
 
-            // Checks user email if matches to email syntax
-            if(!et_email.getText().toString().endsWith("@bytequest.com")) {
-                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid email");
-                et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+        } catch (Exception e) {
+            loginError("User account is not existing", et_email);
+        }
+    }
 
-                et_email.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_email.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.bg_background_edittext));
-                    }
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    private void loginSuccess(User user) {
+        UserManager.getInstance().setCurrentUser(user);
+        SessionManager session = new SessionManager(this, user.getUser_email());
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
-                return;
-            }
+        if (cbx_remember_me.isChecked()) {
+            session.setKeyRememberMe(true);
+            new PrefsHelper(this).setString("user_email_key", user.getUser_email());
+        }
 
-            // Open database connection and login user
-            try {
-                Database database = new Database(this);
-                User user = database.loginUser(et_email.getText().toString());
+        SnackBarHelper.showSuccessSnackBar(findViewById(R.id.main), "User account successfully logged in!");
 
-                String userExisting = user.getUser_email();
+        new Handler().postDelayed(() -> {
+            startActivity(new Intent(this, DashboardActivity.class));
+            finish();
+        }, 1500);
+    }
 
-                // Checks if user password is correct
-                boolean passwordChecker = PasswordHashHelper.getInstance().passwordChecker(et_password.getText().toString(), user.getUser_pass());
+    private void loginError(String message, EditText field) {
+        SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), message);
+        setErrorFields(field);
+        addTextListeners(field);
+    }
 
-                // Checks if user is found and password is correct
-                if(userExisting != null) {
-                    Log.e(TAG, "User found!");
-                    if(passwordChecker) {
-                        Log.e(TAG, "User password correct!");
+    private boolean isEmpty(EditText... fields) {
+        for (EditText field : fields) {
+            if (field.getText().toString().trim().isEmpty()) return true;
+        }
+        return false;
+    }
 
-                        // Set user as current user for quick lookup
-                        UserManager.getInstance().setCurrentUser(user);
+    private void setErrorFields(EditText... fields) {
+        for (EditText field : fields) {
+            field.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+        }
+    }
 
-                        // Save user email for backup & safety
-                        SessionManager session = new SessionManager(this, user.getUser_email());
+    private void setDefaultFields(EditText... fields) {
+        for (EditText field : fields) {
+            field.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext));
+        }
+    }
 
-                        if(cbx_remember_me.isChecked())  {
-
-                            InputMethodManager imm3 = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm3.hideSoftInputFromWindow(cbx_remember_me.getWindowToken(), 0);
-
-                            // Set remembered me for quick login
-                            session.setKeyRememberMe(true);
-
-                            // Set user email backup for UserSession
-                            PrefsHelper prefsHelper = new PrefsHelper(this);
-                            prefsHelper.setString("user_email_key", user.getUser_email());
-
-                            Log.e(TAG, "User registered: " + UserManager.getInstance().getCurrentUser().getFull_name());
-                        }
-
-                        new Handler().postDelayed(() -> {
-                            SnackBarHelper.showSuccessSnackBar(findViewById(R.id.main), "User account successfully logged in!");
-                        }, 1000);
-
-                        new Handler().postDelayed(() -> {
-                            startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-                            finish();
-                        }, 1800);
-                    } else {
-                        Log.e(TAG, "User password incorrect!");
-
-                        SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid password");
-
-                        et_password.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
-
-                        et_password.addTextChangedListener(new TextWatcher() {
-                            @Override
-                            public void afterTextChanged(Editable s) {
-                                et_email.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.bg_background_edittext));
-                                et_password.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.bg_background_edittext));
-                            }
-                            @Override
-                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                            @Override
-                            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                        });
-                    }
+    private void addTextListeners(EditText... fields) {
+        for (EditText field : fields) {
+            field.addTextChangedListener(new TextWatcher() {
+                @Override public void afterTextChanged(Editable s) {
+                    setDefaultFields(fields);
                 }
-            } catch(Exception e) {
-                Log.e(TAG, "User account not found!");
+                @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            });
+        }
+    }
 
-                new Handler().postDelayed(() -> {
-                    SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "User account is not existing");
-
-                    et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
-
-                    et_email.addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void afterTextChanged(Editable s) {
-                            et_email.setBackground(ContextCompat.getDrawable(LoginActivity.this, R.drawable.bg_background_edittext));
-                        }
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                    });
-                }, 500);
-            }
-        });
+    private void hideKeyboard(EditText... fields) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        for (EditText field : fields) {
+            imm.hideSoftInputFromWindow(field.getWindowToken(), 0);
+        }
     }
 }

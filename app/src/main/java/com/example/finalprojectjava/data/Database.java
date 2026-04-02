@@ -193,10 +193,10 @@ public class Database extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             User user = new User();
             user.setUser_id(cursor.getInt(0));
-            user.setUser_email(cursor.getString(1));
-            user.setUser_pass(cursor.getString(2));
-            user.setFirst_name(cursor.getString(3));
-            user.setLast_name(cursor.getString(4));
+            user.setFirst_name(cursor.getString(1));
+            user.setLast_name(cursor.getString(2));
+            user.setUser_email(cursor.getString(3));
+            user.setUser_pass(cursor.getString(4));
             user.setUsername(cursor.getString(5));
             user.setGender(cursor.getString(6));
             user.setBirth_date(cursor.getString(7));

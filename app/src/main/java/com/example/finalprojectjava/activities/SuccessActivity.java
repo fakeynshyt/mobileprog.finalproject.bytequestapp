@@ -37,7 +37,7 @@ public class SuccessActivity extends AppCompatActivity {
         txt_title.setText(key_title);
         txt_desc.setText(key_desc);
 
-        long staticTimer = System.currentTimeMillis() + 6800;
+        long staticTimer = System.currentTimeMillis() + 6900;
 
         redirectingToLoginCounter(staticTimer, key_where);
 

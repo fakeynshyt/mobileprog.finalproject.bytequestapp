@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_background_7"
-    tools:context=".activities.VerificationOTPActivity">
+    android:background="@drawable/bg_background_6"
+    tools:context=".activities.EmailVerificationActivity">
 
     <!-- Guidelines for side margins -->
     <androidx.constraintlayout.widget.Guideline
@@ -36,21 +36,30 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.18" />
+        app:layout_constraintGuide_percent="0.15" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineOTPContent"
+        android:id="@+id/guidelineLoginContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.30005471" />
+        app:layout_constraintGuide_percent="0.30" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineContentBottom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.40966444" />
+        app:layout_constraintGuide_percent="0.42966444" />
+
+    <!-- Back Button -->
+    <ImageView
+        android:id="@+id/goBackClickIV"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        app:srcCompat="@drawable/ic_go_back" />
 
     <!-- Logo -->
     <ImageView
@@ -64,143 +73,111 @@
 
     <!-- Title Section -->
 
+    <!-- Email Input Section -->
+
+    <!-- Send Button -->
+
+    <!-- Footer / Resend Section -->
+
     <TextView
         android:id="@+id/tvTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="We just sent an SMS"
-        android:textColor="@color/darkGray"
-        android:textSize="24sp"
+        android:text="Verification"
+        android:textColor="@color/purple"
+        android:textSize="38sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/guidelineOTPContent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineLoginContent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toTopOf="@id/guidelineContentTop"
-        app:layout_constraintVertical_bias="0.138" />
+        app:layout_constraintVertical_bias="0.29" />
 
     <TextView
-        android:id="@+id/tvSubtitle"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvDescription"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="Enter 4-digit code we sent to"
-        android:textAlignment="center"
+        android:text="Verify your identity to proceed with changing your password."
         android:textColor="@color/darkGray"
         android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tvTitle" />
+        app:layout_constraintBottom_toTopOf="@+id/guidelineLoginContent"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintWidth_percent="0.65" />
 
     <TextView
-        android:id="@+id/displayUserTxt"
+        android:id="@+id/tvEmailLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:textAlignment="center"
+        android:text="Enter Email Address"
         android:textColor="@color/darkGray"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineContentBottom"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvSubtitle" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineLoginContent"
+        app:layout_constraintVertical_bias="0.141" />
 
-    <!-- OTP Input Section -->
-    <LinearLayout
-        android:id="@+id/otpContainer"
+    <EditText
+        android:id="@+id/emailInput"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_background_edittext"
+        android:drawableStart="@drawable/ic_email"
+        android:ems="10"
+        android:hint="johndoe@bytequest.com"
+        android:inputType="textEmailAddress"
+        android:padding="12dp"
+        android:textColor="@color/darkGray"
+        android:textColorHint="@color/lightGray"
         app:layout_constraintBottom_toTopOf="@+id/guidelineContentBottom"
-        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
-        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
-        app:layout_constraintTop_toTopOf="@+id/guidelineOTPContent">
-
-        <EditText
-            android:id="@+id/otp1ET"
-            android:layout_width="62dp"
-            android:layout_height="62dp"
-            android:layout_margin="6dp"
-            android:background="@drawable/bg_background_edittext_otp"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:textColor="@color/darkGray"
-            android:textSize="26sp"
-            tools:text="0" />
-
-        <EditText
-            android:id="@+id/otp2ET"
-            android:layout_width="62dp"
-            android:layout_height="62dp"
-            android:layout_margin="6dp"
-            android:background="@drawable/bg_background_edittext_otp"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:textColor="@color/darkGray"
-            android:textSize="26sp"
-            tools:text="0" />
-
-        <EditText
-            android:id="@+id/otp3ET"
-            android:layout_width="62dp"
-            android:layout_height="62dp"
-            android:layout_margin="6dp"
-            android:background="@drawable/bg_background_edittext_otp"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:textColor="@color/darkGray"
-            android:textSize="26sp"
-            tools:text="0" />
-
-        <EditText
-            android:id="@+id/otp4ET"
-            android:layout_width="62dp"
-            android:layout_height="62dp"
-            android:layout_margin="6dp"
-            android:background="@drawable/bg_background_edittext_otp"
-            android:inputType="number"
-            android:textAlignment="center"
-            android:textColor="@color/darkGray"
-            android:textSize="26sp"
-            tools:text="0" />
-    </LinearLayout>
-
-    <!-- Verify Button -->
-
-    <!-- Resend Footer Section -->
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/tvEmailLabel"
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/verifyBtn"
+        android:id="@+id/sendBtn"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:backgroundTint="@color/purple"
-        android:text="Verify"
+        android:text="Send"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toTopOf="@+id/guidelineContentBottom" />
+        app:layout_constraintTop_toTopOf="@+id/guidelineContentBottom"
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
-        android:id="@+id/resendContainer"
+        android:id="@+id/llFooter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/verifyBtn">
+        app:layout_constraintTop_toBottomOf="@id/sendBtn">
 
         <TextView
             android:id="@+id/promptTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Didn't recieve the code?"
+            android:textColor="@color/darkGray"
             android:textSize="12sp" />
 
         <TextView
@@ -218,9 +195,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
-            android:textStyle="bold"
+            android:text=""
+            android:textColor="@color/darkGray"
             android:textSize="12sp"
-            tools:text="00:59" />
+            android:textStyle="bold" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

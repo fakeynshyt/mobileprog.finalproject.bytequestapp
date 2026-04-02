@@ -26,7 +26,7 @@
             android:name=".activities.VerificationOTPActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.PasswordVerificationActivity"
+            android:name=".activities.EmailVerificationActivity"
             android:exported="false" />
         <activity
             android:name=".activities.ResetOptionActivity"

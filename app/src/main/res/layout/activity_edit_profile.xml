@@ -1,281 +1,336 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.EditProfileActivity"
-    android:orientation="vertical"
-    android:background="@drawable/bg_background_4">
+    android:background="@drawable/bg_background_4"
+    tools:context=".activities.EditProfileActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+    <!-- Guidelines -->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+    <Button
+        android:id="@+id/saveProfileBtn"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/purple"
+        android:text="Save"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintVertical_bias="0.137" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="28dp"
-                android:gravity="center">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
 
-                <ImageView
-                    android:id="@+id/goBackClick"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    app:srcCompat="@drawable/ic_go_back" />
-            </LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
 
-            <LinearLayout
-                android:layout_width="276dp"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.02" />
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="86dp"
-                    android:layout_height="86dp"
-                    android:layout_marginLeft="12dp"
-                    app:srcCompat="@drawable/ic_bytequest_logo"/>
-            </LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineContentTop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.145" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineImageContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.195" />
 
-                <TextView
-                    android:id="@+id/skipClick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Skip"
-                    android:textColor="@color/lightGray"
-                    android:textSize="24dp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineContentBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.38" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineBottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.80" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Profile"
-                android:textSize="24dp"
-                android:textStyle="bold"
-                android:textColor="@color/white"/>
+    <!-- Top Bar -->
+    <ImageView
+        android:id="@+id/goBackClick"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        app:srcCompat="@drawable/ic_go_back" />
 
-            <ImageView
-                android:id="@+id/imageView4"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:srcCompat="@drawable/ic_profile" />
-        </LinearLayout>
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="86dp"
+        android:layout_height="86dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guidelineTop"
+        app:srcCompat="@drawable/ic_bytequest_logo" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center">
+    <!-- Profile Header -->
+    <TextView
+        android:id="@+id/skipClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Skip"
+        android:textColor="@color/lightGray"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+        app:layout_constraintTop_toTopOf="@+id/guidelineTop" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="-156dp"
-                android:text="Name"
-                android:textSize="16dp"
-                android:textColor="@color/lightGray"
-                android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/tvProfileTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Profile"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineImageContent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guidelineContentTop" />
 
-            <EditText
-                android:id="@+id/inputFullName"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:padding="12dp"
-                android:ems="10"
-                android:inputType="text"
-                android:hint=" Full name"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/ic_user"
-                android:textColorHint="@color/lightGray"
-                android:background="@drawable/bg_background_edittext"/>
+    <!-- Name Section -->
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineContentBottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintTop_toTopOf="@+id/guidelineImageContent"
+        app:srcCompat="@drawable/ic_profile" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="-139dp"
-                android:text="Username"
-                android:textSize="16dp"
-                android:textColor="@color/lightGray"
-                android:textStyle="bold"/>
 
-            <EditText
-                android:id="@+id/inputUsername"
-                android:layout_width="350dp"
-                android:layout_height="50dp"
-                android:padding="12dp"
-                android:ems="10"
-                android:inputType="text"
-                android:hint=" JohnDoe12"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/ic_user_2"
-                android:textColorHint="@color/lightGray"
-                android:background="@drawable/bg_background_edittext"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="20dp"
-                    android:text="Gender"
-                    android:textSize="16dp"
-                    android:textStyle="bold"/>
-
-                <CheckBox
-                    android:id="@+id/cbMale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="35dp"
-                    android:paddingRight="36dp"
-                    android:text="Male"
-                    android:textColor="#434343"
-                    android:backgroundTint="@color/purple"
-                    app:useMaterialThemeColors="true"/>
-
-                <CheckBox
-                    android:id="@+id/cbFemale"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Female"
-                    android:textColor="#434343"
-                    android:backgroundTint="@color/purple"
-                    app:useMaterialThemeColors="true"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
-                    android:text="Birth date"
-                    android:textSize="16dp"
-                    android:textStyle="bold"/>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparentLightGray"
-                    app:cardCornerRadius="10dp">
-
-                    <LinearLayout
-                        android:id="@+id/dateOfBirthPicker"
-                        android:onClick="openDatePickerDialog"
-                        android:layout_width="205dp"
-                        android:layout_height="match_parent"
-                        android:paddingRight="12dp"
-                        android:paddingLeft="12dp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:background="@color/transparentLightGray">
-
-                        <ImageView
-                            android:id="@+id/imageView3"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginEnd="5dp"
-                            app:srcCompat="@drawable/ic_calendar" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Calendar" />
-
-                            <TextView
-                                android:id="@+id/inputDate"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="10/19/2005"
-                                android:textSize="18dp"
-                                android:textStyle="bold"/>
-                        </LinearLayout>
-                    </LinearLayout>
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="-146dp"
-                    android:text="Address"
-                    android:textSize="16dp"
-                    android:textColor="@color/lightGray"
-                    android:textStyle="bold"/>
-
-                <EditText
-                    android:id="@+id/inputAddress"
-                    android:layout_width="350dp"
-                    android:layout_height="50dp"
-                    android:padding="12dp"
-                    android:ems="10"
-                    android:inputType="text"
-                    android:textColor="@color/white"
-                    android:hint="123 Main Street Springfield, IL 62704 USA"
-                    android:drawableStart="@drawable/ic_location"
-                    android:textColorHint="@color/lightGray"
-                    android:background="@drawable/bg_background_edittext"/>
-            </LinearLayout>
-        </LinearLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guidelineBottom"
+        app:layout_constraintEnd_toStartOf="@+id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@+id/guidelineStart"
+        app:layout_constraintTop_toTopOf="@+id/guidelineContentBottom">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center">
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/saveProfileBtn"
-                android:layout_width="350dp"
-                android:layout_height="60dp"
-                android:textSize="20dp"
-                android:text="Save"
-                android:textStyle="bold"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/purple" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Full name"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/inputFullName"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_background_edittext"
+                android:drawableStart="@drawable/ic_user"
+                android:ems="10"
+                android:hint="John Doe Smith"
+                android:enabled="false"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:textColor="@color/darkGray"
+                android:textColorHint="@color/lightGray" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Username"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/inputUsername"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_background_edittext"
+                android:drawableStart="@drawable/ic_user_2"
+                android:ems="10"
+                android:hint="John Doe Smith"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:textColor="@color/darkGray"
+                android:textColorHint="@color/lightGray" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Username"
+                        android:textColor="@color/gray"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/cbMale"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/cbMale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/cbFemale"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/textView2"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <CheckBox
+                        android:id="@+id/cbFemale"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/cbMale"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="Date of birth"
+                        android:textColor="@color/gray"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0.478" />
+
+                    <LinearLayout
+                        android:id="@+id/dateOfBirthPicker"
+                        android:onClick="openDatePickerDialog"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:background="@drawable/bg_background_edittext"
+                        app:layout_constraintStart_toEndOf="@+id/textView3"
+                        app:layout_constraintTop_toTopOf="parent" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:src="@drawable/ic_calendar"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Calendar"
+                                android:textColor="@color/gray"/>
+
+                            <TextView
+                                android:id="@+id/inputDate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="10/19/2005"
+                                android:textStyle="bold"
+                                android:textColor="@color/darkGray"/>
+                        </LinearLayout>
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Address"
+                android:textColor="@color/gray"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/inputAddress"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_background_edittext"
+                android:drawableStart="@drawable/ic_location"
+                android:ems="10"
+                android:hint="Cavite, Manila, Philippines"
+                android:inputType="textEmailAddress"
+                android:padding="12dp"
+                android:textColor="@color/darkGray"
+                android:textColorHint="@color/lightGray" />
+
         </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

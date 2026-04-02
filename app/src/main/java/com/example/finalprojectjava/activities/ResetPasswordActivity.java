@@ -13,7 +13,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -45,10 +44,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_reset_password);
 
-        // Assign widgets from XML
         et_new_pass = findViewById(R.id.inputNewPass);
         et_confirm_pass = findViewById(R.id.inputConfirmPass);
-
         btn_continue = findViewById(R.id.btnContinue);
         btn_cancel = findViewById(R.id.btnCancel);
 
@@ -58,184 +55,115 @@ public class ResetPasswordActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Navigate to logging in activity
-        btn_cancel.setOnClickListener(v -> {
-            onBackPressed();
-        });
+        btn_cancel.setOnClickListener(v -> onBackPressed());
 
-        // Create new password
-        btn_continue.setOnClickListener(v -> {
-            String newPass = et_new_pass.getText().toString();
-            String confirmPass = et_confirm_pass.getText().toString();
+        btn_continue.setOnClickListener(v -> handlePasswordReset());
+    }
 
-            // Gets old password from shared preferences
-            PrefsHelper prefsHelper = new PrefsHelper(this, UserManager.getInstance().getCurrentUser().getUser_email());
-            String oldPassword = prefsHelper.getString("plain_text_pass_key", "");
+    private void handlePasswordReset() {
+        String newPass = et_new_pass.getText().toString();
+        String confirmPass = et_confirm_pass.getText().toString();
 
-            Log.e(TAG, "User email: " + UserManager.getInstance().getCurrentUser().getUser_email()
-                    + "\nOld password: " + oldPassword);
+        PrefsHelper prefsHelper = new PrefsHelper(this, UserManager.getInstance().getCurrentUser().getUser_email());
+        String oldPassword = prefsHelper.getString("plain_text_pass_key", "");
 
-            // Checks if password is empty
-            if(newPass.isEmpty() || confirmPass.isEmpty()) {
-                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Required to fill-up all fields");
+        if (!validateFields(newPass, confirmPass, oldPassword)) return;
 
-                if(newPass.isEmpty()) et_new_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
-                if(confirmPass.isEmpty())et_confirm_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+        prefsHelper.setString("plain_text_pass_key", newPass);
 
-                et_new_pass.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_new_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
-                    }
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        try {
+            Database db = new Database(this);
+            User user = db.getUserByEmail(UserManager.getInstance().getCurrentUser().getUser_email());
+            user.setUser_pass(PasswordHashHelper.getInstance().passwordHasher(newPass));
+            db.resetUserPassword(UserManager.getInstance().getCurrentUser().getUser_email(), user.getUser_pass());
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
+            new Handler().postDelayed(() -> {
+                Intent intent = new Intent(this, SuccessActivity.class);
+                intent.putExtra("title_key", "Your Password Has Been Reset!");
+                intent.putExtra("description_key", "Your password has been updated! Please log in with\nyour new credentials to keep your account secure!");
+                intent.putExtra("where_key", "Login");
+                startActivity(intent);
+                finish();
+            }, 1500);
 
-                et_confirm_pass.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_new_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
-                    }
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        } catch (Exception e) {
+            SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Something went wrong!");
+            Log.e(TAG, "Error resetting password: " + e.getMessage());
+        }
+    }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
-                return;
-            }
+    // Validates the fields and shows errors
+    private boolean validateFields(String newPass, String confirmPass, String oldPassword) {
+        EditText[] fields = {et_new_pass, et_confirm_pass};
 
-            // Checks if passwords align with the conditions of pattern
-            if(!passwordSyntaxCheck(newPass)) {
-                new Handler().postDelayed(() -> {
-                    SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Password must be 8+ characters with upper & lowercase, number, and special symbol.");
-                }, 500);
+        if (newPass.isEmpty() || confirmPass.isEmpty()) {
+            showFieldError(fields, "Required to fill-up all fields");
+            return false;
+        }
 
-                et_new_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+        if (!passwordSyntaxCheck(newPass)) {
+            showFieldError(new EditText[]{et_new_pass}, "Password must be 8+ characters with upper & lowercase, number, and special symbol.");
+            return false;
+        }
 
-                et_new_pass.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_new_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
-                    }
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        if (!newPass.equals(confirmPass)) {
+            showFieldError(new EditText[]{et_confirm_pass}, "Password didn't match");
+            return false;
+        }
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
-                return;
-            }
+        if (newPass.equals(oldPassword)) {
+            showFieldError(new EditText[]{et_new_pass}, "New password cannot be the same as the old password");
+            return false;
+        }
 
-            // Checks if passwords match to confirm password
-            if(!newPass.equals(confirmPass)) {
-                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Password didn't match");
-                et_confirm_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+        return true;
+    }
 
-                et_confirm_pass.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        et_new_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
-                        et_confirm_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
-                    }
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    // Shows SnackBar and sets background error, also adds listener to reset background
+    private void showFieldError(EditText[] fields, String message) {
+        SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), message);
 
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                });
-                return;
-            }
+        for (EditText field : fields) {
+            field.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
+            addResetBackgroundListener(field);
+        }
+    }
 
-            // Checks if new password is the same as the old password
-            if(newPass.equals(oldPassword)) {
-                new Handler().postDelayed(() -> {
-                    SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "New password cannot be the same as the old password");
-                    et_new_pass.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
-
-                    et_new_pass.addTextChangedListener(new TextWatcher() {
-                        @Override
-                        public void afterTextChanged(Editable s) {
-                            et_new_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
-                            et_confirm_pass.setBackground(ContextCompat.getDrawable(ResetPasswordActivity.this, R.drawable.bg_background_edittext));
-                        }
-                        @Override
-                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                        @Override
-                        public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                    });
-                }, 800);
-                return;
-            }
-
-            // Save new password
-            prefsHelper.setString("plain_text_pass_key", newPass);
-
-            String newPlainPass = prefsHelper.getString("plain_text_pass_key", "");
-
-            Log.e(TAG, "User email: " + UserManager.getInstance().getCurrentUser().getUser_email()
-                    + "\nNew password: " + newPlainPass);
-
-            try {
-                Database db = new Database(this);
-
-                // Return user object from database using UserManager
-                User user = db.getUserByEmail(UserManager.getInstance().getCurrentUser().getUser_email());
-
-                // Returns and set hashed password
-                user.setUser_pass(PasswordHashHelper.getInstance().passwordHasher(newPass));
-
-                // Sets new hashed password to the database
-                db.resetUserPassword(UserManager.getInstance().getCurrentUser().getUser_email(), user.getUser_pass());
-
-                new Handler().postDelayed(() -> {
-                    Intent intent = new Intent(this, SuccessActivity.class);
-                    intent.putExtra("title_key", "Your Password Has Been Reset!");
-                    intent.putExtra("description_key", "Your password has been updated! Please log in with\nyour new credentials to keep your account secure!");
-                    intent.putExtra("where_key", "Login");
-                    startActivity(intent);
-                    finish();
-                }, 4500);
-
-            } catch(Exception e) {
-                Toast.makeText(this, "Something went wrong!\n" + e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+    // Resets field background on text change
+    private void addResetBackgroundListener(EditText field) {
+        field.addTextChangedListener(new TextWatcher() {
+            @Override public void afterTextChanged(Editable s) { resetBackground(field); }
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
     }
 
-    // Private Method
+    private void resetBackground(EditText field) {
+        field.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext));
+    }
+
+    // Checks password pattern
     private boolean passwordSyntaxCheck(String password) {
         String regex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
-        Pattern pattern = Pattern.compile(regex);
-
-        return pattern.matcher(password).matches();
+        return Pattern.compile(regex).matcher(password).matches();
     }
 
     @Override
     public void onBackPressed() {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.RECTANGLE);
-        drawable.setCornerRadius(15f); // corner radius in pixels
-        drawable.setColor(Color.WHITE); // background color
+        drawable.setCornerRadius(15f);
+        drawable.setColor(Color.WHITE);
 
         AlertDialog dialog = new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_bytequest_logo_alt)
                 .setTitle("Hold on!")
                 .setMessage("You forgot your password. Leaving now means you can’t log in. Do you want to cancel?")
-                .setPositiveButton("Yes", (dialogOpen, which) -> super.onBackPressed())
+                .setPositiveButton("Yes", (d, which) -> super.onBackPressed())
                 .setNegativeButton("No", null)
                 .create();
 
-        if (dialog.getWindow() != null) {
-            dialog.getWindow().setBackgroundDrawable(drawable);
-        }
-
+        if (dialog.getWindow() != null) dialog.getWindow().setBackgroundDrawable(drawable);
         dialog.show();
     }
 }

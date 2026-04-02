@@ -43,7 +43,7 @@ public class ResetOptionActivity extends AppCompatActivity {
     // Navigate to verification activity
     public void navigateToVerificationAct(View view) {
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(ResetOptionActivity.this, PasswordVerificationActivity.class));
+            startActivity(new Intent(ResetOptionActivity.this, EmailVerificationActivity.class));
         }, 1000);
     }
 }
