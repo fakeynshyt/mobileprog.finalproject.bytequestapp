@@ -1,7 +1,5 @@
 package com.example.finalprojectjava.activities;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -10,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -27,11 +24,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.data.Database;
-import com.example.finalprojectjava.helper.PrefsHelper;
-import com.example.finalprojectjava.helper.SnackBarHelper;
-import com.example.finalprojectjava.manager.SessionManager;
-import com.example.finalprojectjava.manager.UserManager;
+import com.example.finalprojectjava.dao.UserDAO;
+import com.example.finalprojectjava.helpers.PrefsHelper;
+import com.example.finalprojectjava.helpers.SnackBarHelperActivity;
+import com.example.finalprojectjava.managers.SessionManager;
+import com.example.finalprojectjava.managers.UserManager;
 import com.example.finalprojectjava.models.User;
 
 import java.time.LocalDate;
@@ -162,7 +159,6 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     private void saveEditedProfile() {
-        String name = inputFullName.getText().toString();
         String username = inputUsername.getText().toString();
         String gender = male.isChecked() ? "Male" : (female.isChecked() ? "Female" : "Undefined");
         String birthDate = displayDate.getText().toString();
@@ -174,25 +170,29 @@ public class EditProfileActivity extends AppCompatActivity {
 
         }
 
-        User currentUser = UserManager.getInstance().getCurrentUser();
-        if (currentUser != null) {
+        String userEmail = new PrefsHelper(this).getString("user_email_key", null);
 
+        UserDAO userDAO = new UserDAO(this);
+        User currentUser = userDAO.getUserByEmail(userEmail);
+
+
+        if (currentUser != null) {
             currentUser.setUsername(username);
             currentUser.setGender(gender);
             currentUser.setBirth_date(birthDate);
             currentUser.setAddress(address);
         }
 
-        Database dbHelper = new Database(this);
-        int user_id = currentUser.getUser_id();
-        dbHelper.updateUserProfile(user_id, username, gender, birthDate, address);
+        userDAO.updateUserProfile(currentUser);
+        UserManager.getInstance().setCurrentUser(currentUser);
 
-        SnackBarHelper.showSuccessSnackBar(findViewById(R.id.main), "Profile successfully updated!");
-
+        SnackBarHelperActivity.showSuccessSnackBar(findViewById(R.id.main), "Profile successfully updated!");
 
         // ***** Set Key Signed in false because user already change its profile
         SessionManager session = new SessionManager(this, currentUser.getUser_email());
         session.setKeyNewUser(false);
+
+        session.setBonusClaimed(false);
 
         new Handler().postDelayed(() -> {
             startActivity(new Intent(this, DashboardActivity.class));

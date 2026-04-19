@@ -21,12 +21,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.data.Database;
-import com.example.finalprojectjava.helper.PasswordHashHelper;
-import com.example.finalprojectjava.helper.PrefsHelper;
-import com.example.finalprojectjava.helper.SnackBarHelper;
-import com.example.finalprojectjava.manager.SessionManager;
-import com.example.finalprojectjava.manager.UserManager;
+import com.example.finalprojectjava.dao.UserDAO;
+import com.example.finalprojectjava.helpers.PasswordHashHelper;
+import com.example.finalprojectjava.helpers.PrefsHelper;
+import com.example.finalprojectjava.helpers.SnackBarHelperActivity;
+import com.example.finalprojectjava.managers.SessionManager;
+import com.example.finalprojectjava.managers.UserManager;
 import com.example.finalprojectjava.models.User;
 
 import java.util.regex.Pattern;
@@ -67,7 +67,7 @@ public class SignInActivity extends AppCompatActivity {
     private void handleSignUp() {
 
         if (isEmpty(et_first_name, et_last_name, et_email, et_pass, et_confirm_pass)) {
-            SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Required to fill-up all fields");
+            SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), "Required to fill-up all fields");
             setErrorFields(et_first_name, et_last_name, et_email, et_pass, et_confirm_pass);
             addTextListeners(et_first_name, et_last_name, et_email, et_pass, et_confirm_pass);
             return;
@@ -84,7 +84,7 @@ public class SignInActivity extends AppCompatActivity {
         }
 
         if (!et_pass.getText().toString().equals(et_confirm_pass.getText().toString())) {
-            showFieldError("Password didn't match", et_confirm_pass);
+            showFieldError("Password didn't match", et_confirm_pass, et_pass);
             return;
         }
 
@@ -98,13 +98,16 @@ public class SignInActivity extends AppCompatActivity {
             PrefsHelper prefsHelper = new PrefsHelper(this, user.getUser_email());
             prefsHelper.setString("plain_text_pass_key", user.getUser_pass());
 
-            user.setUser_pass(PasswordHashHelper.getInstance().passwordHasher(user.getUser_pass()));
+            new PrefsHelper(this).setString("user_email_key", user.getUser_email());
 
-            Database database = new Database(this);
-            boolean success = database.createUserAccount(user);
+            user.setUser_pass(PasswordHashHelper.getInstance().passwordHasher(user.getUser_pass()));
+            UserDAO userDAO = new UserDAO(this);
+            boolean success = userDAO.createUserAccount(user);
 
             if (success) {
-                signUpSuccess(user);
+                // Fetch user again to get the generated ID from DB
+                User savedUser = userDAO.getUserByEmail(user.getUser_email());
+                signUpSuccess(savedUser);
             } else {
                 showFieldError("User account is already existing", et_email);
             }
@@ -120,7 +123,7 @@ public class SignInActivity extends AppCompatActivity {
         SessionManager session = new SessionManager(this, user.getUser_email());
         session.setKeyNewUser(true);
 
-        SnackBarHelper.showSuccessSnackBar(findViewById(R.id.main), "User account successfully created!");
+        SnackBarHelperActivity.showSuccessSnackBar(findViewById(R.id.main), "User account successfully created!");
 
         new Handler().postDelayed(() -> {
             startActivity(new Intent(this, DashboardActivity.class));
@@ -129,9 +132,15 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     private void showFieldError(String message, EditText field) {
-        SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), message);
+        SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), message);
         setErrorFields(field);
         addTextListeners(field);
+    }
+
+    private void showFieldError(String message, EditText field1, EditText field2) {
+        SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), message);
+        setErrorFields(field1, field2);
+        addTextListeners(field1, field2);
     }
 
     private boolean isEmpty(EditText... fields) {

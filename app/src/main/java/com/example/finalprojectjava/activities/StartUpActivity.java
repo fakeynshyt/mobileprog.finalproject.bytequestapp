@@ -18,11 +18,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.data.Database;
-import com.example.finalprojectjava.helper.PrefsHelper;
-import com.example.finalprojectjava.helper.SnackBarHelper;
-import com.example.finalprojectjava.manager.SessionManager;
-import com.example.finalprojectjava.manager.UserManager;
+import com.example.finalprojectjava.dao.UserDAO;
+import com.example.finalprojectjava.helpers.PrefsHelper;
+import com.example.finalprojectjava.helpers.SnackBarHelperActivity;
+import com.example.finalprojectjava.managers.SessionManager;
+import com.example.finalprojectjava.managers.UserManager;
 import com.example.finalprojectjava.models.User;
 
 public class StartUpActivity extends AppCompatActivity {
@@ -54,10 +54,10 @@ public class StartUpActivity extends AppCompatActivity {
 
         // Checks if saved email is null or not null
         if(savedEmail != null) {
-            Database dbHelper = new Database(this);
+            UserDAO userDAO = new UserDAO(this);
             SessionManager session = new SessionManager(this, savedEmail);
             boolean loggedIn = session.isRemembered();
-            boolean hasUser = dbHelper.hasUserAccount();
+            boolean hasUser = userDAO.hasUserAccount();
 
             // Checks and clears session if user is not remembered and database is null
             if(loggedIn && !hasUser) {
@@ -69,7 +69,7 @@ public class StartUpActivity extends AppCompatActivity {
             if(loggedIn) {
                 Intent intent = new Intent(this, DashboardActivity.class);
                 String savedUser = session.getKeySavedUser();
-                User user = dbHelper.getUserByEmail(savedUser);
+                User user = userDAO.getUserByEmail(savedUser);
 
                 UserManager.getInstance().setCurrentUser(user);
                 startActivity(intent);
@@ -86,7 +86,7 @@ public class StartUpActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SnackBarHelper.showWarningSnackBar(findViewById(R.id.main), "Error!");
+                SnackBarHelperActivity.showWarningSnackBar(findViewById(R.id.main), "Error!");
                 new Handler().postDelayed(() -> {
                     startActivity(new Intent(StartUpActivity.this, LoginActivity.class));
                 }, 500);

@@ -1,0 +1,50 @@
+What is DBMS?, A) Database system, B) OS, C) Compiler, D) Editor, A, 1
+Which stores data?, A) Table, B) File, C) Folder, D) Sheet, A, 1
+Which key is primary?, A) unique ID, B) duplicate, C) null only, D) random, A, 1
+SQL stands for?, A) Structured Query Language, B) Simple Query Language, C) System Query Logic, D) None, A, 1
+Which command selects data?, A) SELECT, B) INSERT, C) UPDATE, D) DELETE, A, 1
+Which command adds data?, A) SELECT, B) INSERT, C) UPDATE, D) DROP, B, 1
+Which command removes data?, A) DELETE, B) REMOVE, C) DROP, D) CLEAR, A, 1
+Which DB type uses rows/columns?, A) Relational, B) NoSQL, C) Graph, D) Key-value, A, 1
+Which tool is DB server?, A) MySQL, B) HTML, C) Java, D) CSS, A, 1
+Which symbol ends SQL?, A) ;, B) ., C) :, D) ,, A, 1
+Which clause filters?, A) WHERE, B) GROUP, C) ORDER, D) JOIN, A, 10
+Which joins tables?, A) JOIN, B) LINK, C) CONNECT, D) MERGE, A, 10
+Which updates data?, A) UPDATE, B) MODIFY, C) CHANGE, D) EDIT, A, 10
+Which removes table?, A) DROP, B) DELETE, C) REMOVE, D) ERASE, A, 10
+Which constraint unique?, A) UNIQUE, B) PRIMARY, C) FOREIGN, D) CHECK, A, 10
+Which key references table?, A) Foreign Key, B) Primary Key, C) Index, D) Null, A, 10
+Which function counts?, A) COUNT(), B) SUM(), C) AVG(), D) MAX(), A, 10
+Which orders results?, A) ORDER BY, B) SORT, C) GROUP, D) FILTER, A, 10
+Which database is NoSQL?, A) MongoDB, B) MySQL, C) Oracle, D) SQL Server, A, 10
+Which transaction command?, A) COMMIT, B) SAVE, C) APPLY, D) DONE, A, 10
+Which normal form reduces redundancy?, A) 1NF, B) 2NF, C) 3NF, D) all, D, 15
+Which ACID property ensures consistency?, A) Atomicity, B) Consistency, C) Isolation, D) Durability, B, 15
+Which isolation level?, A) Read Uncommitted, B) Fast, C) Slow, D) None, A, 15
+Which indexing improves speed?, A) Index, B) Key, C) Column, D) Row, A, 15
+Which join returns all rows?, A) FULL JOIN, B) INNER JOIN, C) LEFT JOIN, D) RIGHT JOIN, A, 15
+Which removes duplicates?, A) DISTINCT, B) UNIQUE, C) CLEAN, D) FILTER, A, 15
+Which SQL groups data?, A) GROUP BY, B) ORDER BY, C) FILTER, D) SORT, A, 15
+Which function adds values?, A) SUM(), B) COUNT(), C) AVG(), D) MAX(), A, 15
+Which DB model is hierarchical?, A) Tree, B) Table, C) Graph, D) Object, A, 15
+Which command modifies structure?, A) ALTER, B) UPDATE, C) CHANGE, D) MODIFY, A, 15
+Which SQL injection is?, A) attack, B) function, C) tool, D) query, A, 20
+Which protects DB?, A) Encryption, B) Looping, C) Indexing, D) Sorting, A, 20
+Which backup type?, A) Full, B) Partial, C) None, D) Random, A, 20
+Which restores DB?, A) RESTORE, B) FIX, C) RECOVER, D) LOAD, A, 20
+Which view is virtual table?, A) VIEW, B) TABLE, C) INDEX, D) SCHEMA, A, 20
+Which improves performance?, A) Indexing, B) Looping, C) Logging, D) Debugging, A, 20
+Which DB is distributed?, A) Cassandra, B) MySQL, C) SQLite, D) Oracle, A, 20
+Which command locks table?, A) LOCK, B) HOLD, C) STOP, D) BLOCK, A, 20
+Which SQL joins condition?, A) ON, B) WHERE, C) IF, D) WHEN, A, 20
+Which ensures atomic transactions?, A) COMMIT, B) ROLLBACK, C) SAVE, D) DELETE, A, 20
+Which big data system?, A) Hadoop, B) MySQL, C) SQLite, D) CSV, A, 25
+Which NoSQL type?, A) Document, B) Table, C) Row, D) Sheet, A, 25
+Which improves scalability?, A) Sharding, B) Index, C) Loop, D) Sort, A, 25
+Which DB uses graph model?, A) Neo4j, B) MySQL, C) Oracle, D) SQLite, A, 25
+Which is cloud DB?, A) Firebase, B) Excel, C) File, D) Folder, A, 25
+Which ensures backup safety?, A) Replication, B) Loop, C) Cache, D) Print, A, 25
+Which speeds queries?, A) Indexing, B) Looping, C) Delay, D) Cache miss, A, 25
+Which SQL optimization?, A) Query plan, B) Random, C) Slow scan, D) Full scan always, A, 25
+Which DB engine?, A) InnoDB, B) HTML, C) CSS, D) JS, A, 25
+Which ensures distributed consistency?, A) CAP theorem, B) Loop, C) Thread, D) Cache, A, 25

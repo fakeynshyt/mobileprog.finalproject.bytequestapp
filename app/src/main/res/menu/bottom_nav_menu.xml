@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/item1"
+        android:icon="@drawable/ic_dashboard"
+        android:title="Dashboard"/>
+
+    <item android:id="@+id/item2"
+        android:icon="@drawable/ic_lesson"
+        android:title="Lesson"/>
+
+    <item android:id="@+id/itemNull"
+        android:title=""/>
+
+    <item android:id="@+id/item3"
+        android:icon="@drawable/ic_quiz"
+        android:title="Quiz"/>
+
+
+    <item android:id="@+id/item4"
+        android:icon="@drawable/ic_game"
+        android:title="Games"/>
+
+</menu>

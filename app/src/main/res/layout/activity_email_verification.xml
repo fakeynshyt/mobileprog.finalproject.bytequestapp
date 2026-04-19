@@ -59,7 +59,7 @@
         android:layout_height="32dp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toTopOf="@id/guidelineTop"
-        app:srcCompat="@drawable/ic_go_back" />
+        app:srcCompat="@drawable/ic_go_back_light_gray" />
 
     <!-- Logo -->
     <ImageView

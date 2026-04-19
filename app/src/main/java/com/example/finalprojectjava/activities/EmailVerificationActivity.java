@@ -27,11 +27,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.data.Database;
-import com.example.finalprojectjava.helper.NotificationHelper;
-import com.example.finalprojectjava.helper.PrefsHelper;
-import com.example.finalprojectjava.helper.SnackBarHelper;
-import com.example.finalprojectjava.manager.UserManager;
+import com.example.finalprojectjava.dao.UserDAO;
+import com.example.finalprojectjava.helpers.NotificationHelper;
+import com.example.finalprojectjava.helpers.PrefsHelper;
+import com.example.finalprojectjava.helpers.SnackBarHelperActivity;
+import com.example.finalprojectjava.managers.UserManager;
 import com.example.finalprojectjava.models.User;
 
 import java.util.Random;
@@ -97,7 +97,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
 
             // Checks if email is empty
             if(email.isEmpty()) {
-                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Email cannot be empty");
+                SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), "Email cannot be empty");
                 et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
                 addTextListener(et_email);
                 setButtonEnabled(true);
@@ -106,7 +106,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
 
             // Checks if email syntax matches with the specified domain
             if(!et_email.getText().toString().endsWith("@bytequest.com")) {
-                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid email");
+                SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), "Invalid email");
                 et_email.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
                 addTextListener(et_email);
                 setButtonEnabled(true);
@@ -114,8 +114,8 @@ public class EmailVerificationActivity extends AppCompatActivity {
             }
             try {
                 // Returns user from database if email input matches
-                Database db = new Database(this);
-                User userExists = db.getUserByEmail(email);
+                UserDAO userDAO = new UserDAO(this);
+                User userExists = userDAO.getUserByEmail(email);
 
                 // Generates random number for otp code
                 int verificationCode = new Random().nextInt(9000) + 1000;
@@ -135,7 +135,7 @@ public class EmailVerificationActivity extends AppCompatActivity {
                     }, relayCodeMillis);
 
                     new Handler().postDelayed(() -> {
-                        SnackBarHelper.showSuccessSnackBar(findViewById(R.id.main), "User account successfully found!");
+                        SnackBarHelperActivity.showSuccessSnackBar(findViewById(R.id.main), "User account successfully found!");
                     }, 800);
 
                     // handles the navigation to forgot password otp activity
@@ -157,14 +157,14 @@ public class EmailVerificationActivity extends AppCompatActivity {
                     }, 2000);
                 } else {
                     new Handler().postDelayed(() -> {
-                        SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "User account is not existing");
+                        SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), "User account is not existing");
                         addTextListener(et_email);
                         setButtonEnabled(true);
                     }, 500);
                 }
             } catch(Exception e) {
                 Log.e(TAG, "User account not found!");
-                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Something went wrong!");
+                SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), "Something went wrong!");
             }
         });
     }

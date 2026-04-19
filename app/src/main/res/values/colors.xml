@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
+    <color name="darkModePrimaryColor">#242323</color>
+    <color name="LightMode">#F5EEFB</color>
     <color name="white">#FFFFFFFF</color>
     <color name="purple">#6725C7</color>
     <color name="transparentPurple">#6DCDACF2</color>
@@ -8,6 +10,6 @@
     <color name="lightGray">#BEB2C8</color>
     <color name="darkGray">#675E71</color>
     <color name="transparentLightGray">#89D4C8DB</color>
-    <color name="testColorScheme1">#C0FFDDDD</color>
+    <color name="transparent">#00FFDDDD</color>
     <color name="dullPurple">#69499E</color>
 </resources>

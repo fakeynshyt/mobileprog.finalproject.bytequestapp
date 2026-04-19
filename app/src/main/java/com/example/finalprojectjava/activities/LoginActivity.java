@@ -1,7 +1,5 @@
 package com.example.finalprojectjava.activities;
 
-import static android.content.ContentValues.TAG;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,12 +21,12 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.data.Database;
-import com.example.finalprojectjava.helper.PasswordHashHelper;
-import com.example.finalprojectjava.helper.PrefsHelper;
-import com.example.finalprojectjava.helper.SnackBarHelper;
-import com.example.finalprojectjava.manager.SessionManager;
-import com.example.finalprojectjava.manager.UserManager;
+import com.example.finalprojectjava.dao.UserDAO;
+import com.example.finalprojectjava.helpers.PasswordHashHelper;
+import com.example.finalprojectjava.helpers.PrefsHelper;
+import com.example.finalprojectjava.helpers.SnackBarHelperActivity;
+import com.example.finalprojectjava.managers.SessionManager;
+import com.example.finalprojectjava.managers.UserManager;
 import com.example.finalprojectjava.models.User;
 
 public class LoginActivity extends AppCompatActivity {
@@ -63,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
 
         txt_forgot_password_click.setOnClickListener(v -> {
             hideKeyboard(et_email, et_password);
-            SnackBarHelper.showInfoSnackBar(findViewById(R.id.main), "Please wait...");
+            SnackBarHelperActivity.showInfoSnackBar(findViewById(R.id.main), "Please wait...");
             new Handler().postDelayed(() -> startActivity(new Intent(this, ResetOptionActivity.class)), 1500);
         });
 
@@ -74,22 +71,22 @@ public class LoginActivity extends AppCompatActivity {
         hideKeyboard(et_email, et_password);
 
         if (isEmpty(et_email, et_password)) {
-            SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Required to fill-up all fields");
+            SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), "Required to fill-up all fields");
             setErrorFields(et_email, et_password);
             addTextListeners(et_email, et_password);
             return;
         }
 
         if (!et_email.getText().toString().endsWith("@bytequest.com")) {
-            SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid email");
+            SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), "Invalid email");
             setErrorFields(et_email);
             addTextListeners(et_email);
             return;
         }
 
         try {
-            Database database = new Database(this);
-            User user = database.loginUser(et_email.getText().toString());
+            UserDAO userDAO = new UserDAO(this);
+            User user = userDAO.loginUser(et_email.getText().toString());
 
             boolean passwordChecker = PasswordHashHelper.getInstance()
                     .passwordChecker(et_password.getText().toString(), user.getUser_pass());
@@ -114,7 +111,7 @@ public class LoginActivity extends AppCompatActivity {
             new PrefsHelper(this).setString("user_email_key", user.getUser_email());
         }
 
-        SnackBarHelper.showSuccessSnackBar(findViewById(R.id.main), "User account successfully logged in!");
+        SnackBarHelperActivity.showSuccessSnackBar(findViewById(R.id.main), "User account successfully logged in!");
 
         new Handler().postDelayed(() -> {
             startActivity(new Intent(this, DashboardActivity.class));
@@ -123,7 +120,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginError(String message, EditText field) {
-        SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), message);
+        SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), message);
         setErrorFields(field);
         addTextListeners(field);
     }

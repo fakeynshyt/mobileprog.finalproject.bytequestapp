@@ -11,7 +11,7 @@ public class User {
     private String username;
     private String address;
     private int level;
-    private int exp;
+    private int byte_point;
 
     public User(int user_id, String user_email, String user_pass, String first_name, String last_name) {
         this.user_email = user_email;
@@ -24,7 +24,7 @@ public class User {
         this.address = "";
         this.username = "";
         this.level = 1;
-        this.exp = 0;
+        this.byte_point = 0;
     }
 
     public User() {}
@@ -102,11 +102,43 @@ public class User {
         this.level = level;
     }
 
-    public int getExp() {
-        return exp;
+    public int getByte_point() {
+        return byte_point;
     }
 
-    public void setExp(int exp) {
-        this.exp = exp;
+    public int setByte_point(int byte_point) {
+        int point_limit = 100;
+        int current_point = this.byte_point;
+
+        int total = current_point + byte_point;
+
+        int remainder = 0;
+
+        if (total >= point_limit) {
+            this.level += 1; // just increment level
+            remainder = total - point_limit;
+            this.byte_point = remainder; // carry over remainder
+        } else {
+            this.byte_point = total; // just add normally
+        }
+        return remainder;
+    }
+
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "user_id=" + user_id +
+                ", user_email='" + user_email + '\'' +
+                ", user_pass='" + user_pass + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", birth_date='" + birth_date + '\'' +
+                ", gender='" + gender + '\'' +
+                ", username='" + username + '\'' +
+                ", address='" + address + '\'' +
+                ", level=" + level +
+                ", exp=" + byte_point +
+                '}';
     }
 }

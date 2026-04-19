@@ -1,0 +1,50 @@
+What is C#?, A) Programming language, B) Database, C) OS, D) Hardware, A, 1
+Which keyword creates a class?, A) class, B) struct, C) object, D) define, A, 1
+Entry point of C# program?, A) start(), B) run(), C) Main(), D) execute(), C, 1
+Which data type stores whole numbers?, A) int, B) float, C) char, D) bool, A, 1
+Which symbol ends a statement?, A) ., B) :, C) ;, D) ,, C, 1
+Which keyword creates object?, A) new, B) make, C) create, D) object, A, 1
+Which framework runs C#?, A) .NET, B) JVM, C) Node.js, D) Android, A, 1
+Which loop runs at least once?, A) for, B) while, C) do-while, D) foreach, C, 1
+What is CLR?, A) Compiler, B) Runtime engine, C) Editor, D) OS, B, 1
+Which keyword prevents inheritance?, A) sealed, B) static, C) private, D) public, A, 1
+Which keyword is used for inheritance?, A) :, B) extends, C) inherits, D) uses, A, 10
+Which keyword implements interface?, A) implements, B) :, C) inherit, D) uses, B, 10
+Which is not primitive?, A) int, B) bool, C) string, D) double, C, 10
+What is List<T>?, A) array, B) list, C) collection, D) map, B, 10
+Which keyword handles exception?, A) try, B) catch, C) throw, D) all, D, 10
+Which keyword defines constant?, A) const, B) final, C) static, D) define, A, 10
+Which method starts thread?, A) Run(), B) Start(), C) Execute(), D) Begin(), B, 10
+Which collection allows duplicates?, A) HashSet, B) List, C) Dictionary, D) Queue, B, 10
+Which keyword imports namespace?, A) include, B) using, C) import, D) require, B, 10
+Which is default value of int?, A) null, B) 0, C) -1, D) undefined, B, 10
+Which collection has key-value?, A) List, B) Set, C) Dictionary, D) Array, C, 15
+Which exception for null?, A) IO, B) ArithmeticException, C) NullReferenceException, D) ClassCast, C, 15
+Which keyword throws exception?, A) throw, B) throws, C) catch, D) error, A, 15
+Which keyword stops loop?, A) stop, B) break, C) exit, D) end, B, 15
+Which keyword skips loop?, A) skip, B) continue, C) next, D) pass, B, 15
+Which interface for multithreading?, A) Runnable, B) Threadable, C) Task, D) Process, C, 15
+Which class for thread?, A) Thread, B) Runnable, C) Run, D) Task, A, 15
+Which stream reads text?, A) Stream, B) OutputStream, C) StreamReader, D) StreamWriter, C, 15
+Which stream writes text?, A) Stream, B) OutputStream, C) StreamReader, D) StreamWriter, D, 15
+Which keyword serializes?, A) serial, B) Serializable, C) save, D) persist, B, 15
+Which API connects DB?, A) ADO.NET, B) JDBC, C) SQL, D) ODBC, A, 20
+Which annotation overrides?, A) override, B) overload, C) method, D) super, A, 20
+Which feature passes behavior?, A) Lambda, B) Class, C) Object, D) Loop, A, 20
+Lambda symbol?, A) ->, B) =>, C) ::, D) >>, B, 20
+Which method filters?, A) Where(), B) Map(), C) Reduce(), D) Collect(), A, 20
+Which method transforms?, A) Where(), B) Select(), C) Reduce(), D) Collect(), B, 20
+Which method combines?, A) Where(), B) Select(), C) Aggregate(), D) Collect(), C, 20
+Which method gathers?, A) Where(), B) Select(), C) Reduce(), D) ToList(), D, 20
+Which runtime executes C#?, A) JVM, B) CLR, C) GC, D) JIT, B, 20
+Which keyword avoids serialization?, A) transient, B) static, C) final, D) volatile, A, 20
+Which method executes LINQ?, A) query, B) select, C) filter, D) map, A, 25
+Which pattern is used in async programming?, A) async/await, B) thread/loop, C) sync/block, D) delay/wait, A, 25
+Which collection is thread-safe?, A) List, B) Vector, C) ConcurrentBag, D) ArrayList, C, 25
+Which keyword locks code?, A) lock, B) sync, C) thread, D) wait, A, 25
+Which keyword defines async method?, A) async, B) await, C) task, D) run, A, 25
+Which keyword waits async result?, A) async, B) await, C) wait, D) delay, B, 25
+Which API handles HTTP requests?, A) HttpClient, B) WebAPI, C) REST, D) TCP, A, 25
+Which design pattern is commonly used?, A) Singleton, B) Loop, C) Array, D) Stack, A, 25
+Which memory is managed automatically?, A) Stack, B) Heap GC, C) Register, D) Disk, B, 25
+Which feature improves performance?, A) JIT compilation, B) Looping, C) Thread sleep, D) Delay, A, 25

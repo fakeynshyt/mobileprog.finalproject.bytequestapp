@@ -28,10 +28,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.helper.NotificationHelper;
-import com.example.finalprojectjava.helper.PrefsHelper;
-import com.example.finalprojectjava.helper.SnackBarHelper;
-import com.example.finalprojectjava.manager.UserManager;
+import com.example.finalprojectjava.helpers.NotificationHelper;
+import com.example.finalprojectjava.helpers.PrefsHelper;
+import com.example.finalprojectjava.helpers.SnackBarHelperActivity;
+import com.example.finalprojectjava.managers.UserManager;
 
 import java.util.Random;
 
@@ -99,7 +99,7 @@ public class VerificationOTPActivity extends AppCompatActivity {
                     || et_otp_3.getText().toString().isEmpty()
                     || et_otp_4.getText().toString().isEmpty()) {
 
-                SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "OTP code cannot be empty");
+                SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), "OTP code cannot be empty");
 
                 if(et_otp_1.getText().toString().isEmpty()) et_otp_1.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
                 if(et_otp_2.getText().toString().isEmpty()) et_otp_2.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));
@@ -120,11 +120,11 @@ public class VerificationOTPActivity extends AppCompatActivity {
 
         if(checkCode(otpField, String.valueOf(code))) {
             new Handler().postDelayed(() -> {
-                SnackBarHelper.showSuccessSnackBar(findViewById(R.id.main), "OTP code successfully verified!");
+                SnackBarHelperActivity.showSuccessSnackBar(findViewById(R.id.main), "OTP code successfully verified!");
             }, 2500);
 
             new Handler().postDelayed(() -> {
-                SnackBarHelper.showInfoSnackBar(findViewById(R.id.main), "Redirecting to reset password...");
+                SnackBarHelperActivity.showInfoSnackBar(findViewById(R.id.main), "Redirecting to reset password...");
             }, 4500);
 
             new Handler().postDelayed(() -> {
@@ -132,7 +132,7 @@ public class VerificationOTPActivity extends AppCompatActivity {
                 finish();
             }, 6500);
         } else {
-            SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Invalid OTP code");
+            SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), "Invalid OTP code");
 
             EditText[] editTexts = {et_otp_1, et_otp_2, et_otp_3, et_otp_4};
 

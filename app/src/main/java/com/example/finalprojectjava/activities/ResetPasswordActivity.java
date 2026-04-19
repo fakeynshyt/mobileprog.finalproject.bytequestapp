@@ -23,11 +23,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.finalprojectjava.R;
-import com.example.finalprojectjava.data.Database;
-import com.example.finalprojectjava.helper.PasswordHashHelper;
-import com.example.finalprojectjava.helper.PrefsHelper;
-import com.example.finalprojectjava.helper.SnackBarHelper;
-import com.example.finalprojectjava.manager.UserManager;
+import com.example.finalprojectjava.dao.UserDAO;
+import com.example.finalprojectjava.helpers.PasswordHashHelper;
+import com.example.finalprojectjava.helpers.PrefsHelper;
+import com.example.finalprojectjava.helpers.SnackBarHelperActivity;
+import com.example.finalprojectjava.managers.UserManager;
 import com.example.finalprojectjava.models.User;
 
 import java.util.regex.Pattern;
@@ -72,10 +72,10 @@ public class ResetPasswordActivity extends AppCompatActivity {
         prefsHelper.setString("plain_text_pass_key", newPass);
 
         try {
-            Database db = new Database(this);
-            User user = db.getUserByEmail(UserManager.getInstance().getCurrentUser().getUser_email());
+            UserDAO userDAO = new UserDAO(this);
+            User user = userDAO.getUserByEmail(UserManager.getInstance().getCurrentUser().getUser_email());
             user.setUser_pass(PasswordHashHelper.getInstance().passwordHasher(newPass));
-            db.resetUserPassword(UserManager.getInstance().getCurrentUser().getUser_email(), user.getUser_pass());
+            userDAO.resetUserPassword(UserManager.getInstance().getCurrentUser().getUser_email(), user.getUser_pass());
 
             new Handler().postDelayed(() -> {
                 Intent intent = new Intent(this, SuccessActivity.class);
@@ -87,7 +87,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             }, 1500);
 
         } catch (Exception e) {
-            SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), "Something went wrong!");
+            SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), "Something went wrong!");
             Log.e(TAG, "Error resetting password: " + e.getMessage());
         }
     }
@@ -121,7 +121,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     // Shows SnackBar and sets background error, also adds listener to reset background
     private void showFieldError(EditText[] fields, String message) {
-        SnackBarHelper.showErrorSnackBar(findViewById(R.id.main), message);
+        SnackBarHelperActivity.showErrorSnackBar(findViewById(R.id.main), message);
 
         for (EditText field : fields) {
             field.setBackground(ContextCompat.getDrawable(this, R.drawable.bg_background_edittext_err));

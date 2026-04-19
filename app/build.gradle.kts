@@ -41,10 +41,12 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
+    implementation(libs.fragment)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("org.mindrot:jbcrypt:0.4")
     implementation("com.airbnb.android:lottie:6.0.0")
+    implementation("com.google.android.material:material:1.1.0")
 }
 

@@ -1,0 +1,50 @@
+What is Java?, A) Programming language, B) Database, C) OS, D) Hardware, A, 1
+Which keyword is used to create a class?, A) class, B) struct, C) object, D) define, A, 1
+Entry point of Java program?, A) start(), B) run(), C) main(), D) execute(), C, 1
+Which data type stores whole numbers?, A) int, B) float, C) char, D) boolean, A, 1
+Which symbol ends a statement?, A) ., B) :, C) ;, D) ,, C, 1
+Which keyword creates object?, A) new, B) make, C) create, D) object, A, 1
+Which package contains Scanner?, A) java.io, B) java.util, C) java.net, D) java.lang, B, 1
+Which loop runs at least once?, A) for, B) while, C) do-while, D) foreach, C, 1
+What is JVM?, A) Java compiler, B) Runtime engine, C) Editor, D) OS, B, 1
+Which keyword prevents inheritance?, A) final, B) static, C) private, D) public, A, 1
+Which keyword is used for inheritance?, A) extends, B) inherits, C) uses, D) include, A, 10
+Which keyword implements interface?, A) extends, B) implements, C) inherit, D) uses, B, 10
+Which is not primitive?, A) int, B) boolean, C) String, D) double, C, 10
+What is ArrayList?, A) array, B) list, C) collection, D) map, B, 10
+Which keyword handles exception?, A) try, B) catch, C) throw, D) all, D, 10
+Which keyword defines constant?, A) const, B) final, C) static, D) define, B, 10
+Which method starts thread?, A) run(), B) start(), C) execute(), D) begin(), B, 10
+Which collection allows duplicates?, A) Set, B) HashSet, C) ArrayList, D) Map, C, 10
+Which keyword is used to import?, A) include, B) import, C) using, D) require, B, 10
+Which is default value of int?, A) null, B) 0, C) -1, D) undefined, B, 10
+Which collection has key-value?, A) List, B) Set, C) Map, D) Array, C, 15
+Which map implementation?, A) HashMap, B) ArrayList, C) TreeSet, D) Vector, A, 15
+Which exception for divide by zero?, A) IO, B) ArithmeticException, C) NullPointer, D) Runtime, B, 15
+Which exception for null?, A) IO, B) ArithmeticException, C) NullPointerException, D) ClassCast, C, 15
+Which keyword throws exception?, A) throw, B) throws, C) catch, D) error, A, 15
+Which keyword rethrows?, A) throw, B) throws, C) catch, D) final, A, 15
+Which interface for multithreading?, A) Runnable, B) Threadable, C) Execute, D) Process, A, 15
+Which class for thread?, A) Thread, B) Runnable, C) Run, D) Task, A, 15
+Which keyword stops loop?, A) stop, B) break, C) exit, D) end, B, 15
+Which keyword skips loop?, A) skip, B) continue, C) next, D) pass, B, 15
+Which stream reads bytes?, A) InputStream, B) OutputStream, C) Reader, D) Writer, A, 20
+Which stream writes bytes?, A) InputStream, B) OutputStream, C) Reader, D) Writer, B, 20
+Which stream reads text?, A) InputStream, B) OutputStream, C) Reader, D) Writer, C, 20
+Which stream writes text?, A) InputStream, B) OutputStream, C) Reader, D) Writer, D, 20
+Which class buffers input?, A) BufferedReader, B) Scanner, C) FileReader, D) InputStream, A, 20
+Which class buffers output?, A) BufferedWriter, B) FileWriter, C) PrintWriter, D) OutputStream, A, 20
+Which keyword serializes?, A) serial, B) Serializable, C) save, D) persist, B, 20
+Which method reads object?, A) readObject(), B) writeObject(), C) load(), D) get(), A, 20
+Which keyword avoids serialization?, A) transient, B) static, C) final, D) volatile, A, 20
+Which API connects DB?, A) JDBC, B) SQL, C) API, D) ODBC, A, 20
+Which annotation overrides?, A) @Override, B) @Overload, C) @Method, D) @Super, A, 25
+Which annotation hides warnings?, A) @SuppressWarnings, B) @Ignore, C) @Safe, D) @NoWarn, A, 25
+Which feature passes behavior?, A) Lambda, B) Class, C) Object, D) Loop, A, 25
+Lambda symbol?, A) ->, B) =>, C) ::, D) >>, A, 25
+Which API streams data?, A) Streams API, B) Collections, C) Arrays, D) IO, A, 25
+Which method filters?, A) filter(), B) map(), C) reduce(), D) collect(), A, 25
+Which method transforms?, A) filter(), B) map(), C) reduce(), D) collect(), B, 25
+Which method combines?, A) filter(), B) map(), C) reduce(), D) collect(), C, 25
+Which method gathers?, A) filter(), B) map(), C) reduce(), D) collect(), D, 25
+Which JVM part executes bytecode?, A) ClassLoader, B) Execution Engine, C) GC, D) JIT, B, 25

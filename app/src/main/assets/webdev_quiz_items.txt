@@ -1,0 +1,50 @@
+What does HTML stand for?, A) HyperText Markup Language, B) HighText Machine Language, C) Hyper Transfer Model, D) None, A, 1
+Which tag creates a paragraph?, A) <p>, B) <h1>, C) <div>, D) <span>, A, 1
+Which tag is for images?, A) <img>, B) <image>, C) <pic>, D) <src>, A, 1
+Which tag links CSS?, A) <style>, B) <css>, C) <link>, D) <script>, C, 1
+CSS stands for?, A) Cascading Style Sheets, B) Computer Style System, C) Color Style Sheet, D) None, A, 1
+Which symbol is class in CSS?, A) ., B) #, C) $, D) @, A, 1
+Which symbol is id in CSS?, A) ., B) #, C) $, D) &, B, 1
+JavaScript runs in?, A) Browser, B) Compiler, C) Database, D) OS, A, 1
+Which tag creates button?, A) <button>, B) <btn>, C) <input>, D) <click>, A, 1
+Which tag creates link?, A) <a>, B) <link>, C) <href>, D) <url>, A, 1
+Which CSS property changes color?, A) color, B) text-color, C) font-color, D) bg-color, A, 10
+Which JS keyword declares variable?, A) var, B) int, C) let, D) both A and C, D, 10
+Which loop exists in JS?, A) for, B) while, C) do-while, D) all, D, 10
+Which method selects element?, A) getElementById, B) select, C) query, D) find, A, 10
+Which HTML is semantic?, A) <div>, B) <span>, C) <section>, D) <br>, C, 10
+Which CSS makes text bold?, A) font-weight, B) bold, C) text-style, D) weight, A, 10
+Which JS compares value only?, A) ==, B) ===, C) =, D) !=, A, 10
+Which event clicks?, A) onclick, B) onpress, C) onhover, D) onload, A, 10
+Which HTML input type password?, A) text, B) password, C) secure, D) hidden, B, 10
+Which CSS layout system?, A) grid, B) flexbox, C) both, D) none, C, 10
+Which API handles JSON?, A) JSON.parse, B) XML, C) HTML, D) CSS, A, 15
+Which JS function logs?, A) print, B) log, C) console.log, D) echo, C, 15
+Which CSS unit is relative?, A) px, B) em, C) cm, D) mm, B, 15
+Which HTML attribute links JS?, A) script, B) src, C) href, D) link, B, 15
+Which JS is async?, A) setTimeout, B) loop, C) function, D) class, A, 15
+Which CSS positions element?, A) position, B) layout, C) align, D) float, A, 15
+Which HTML form sends data?, A) action, B) method, C) submit, D) post, B, 15
+Which JS structure stores data?, A) array, B) object, C) both, D) none, C, 15
+Which CSS hides element?, A) display:none, B) hidden, C) invisible, D) remove, A, 15
+Which JS keyword for constant?, A) var, B) let, C) const, D) final, C, 15
+Which framework is JS?, A) React, B) Laravel, C) Django, D) Spring, A, 20
+Which CSS preprocessors?, A) SASS, B) LESS, C) both, D) none, C, 20
+Which JS engine runs Chrome?, A) V8, B) SpiderMonkey, C) Chakra, D) Rhino, A, 20
+Which method fetches data?, A) fetch(), B) get(), C) request(), D) load(), A, 20
+Which CSS animation property?, A) animation, B) motion, C) move, D) transform only, A, 20
+Which HTML loads JS?, A) script, B) link, C) style, D) js, A, 20
+Which JS handles promises?, A) then(), B) catch(), C) both, D) none, C, 20
+Which CSS display type?, A) block, B) inline, C) flex, D) all, D, 20
+Which JS event triggers load?, A) onload, B) onclick, C) onstart, D) onrun, A, 20
+Which tool compiles JS?, A) Babel, B) JVM, C) CLR, D) GCC, A, 20
+Which architecture is modern JS?, A) MVC, B) MVVM, C) Component-based, D) All, D, 25
+Which React concept?, A) State, B) Loop, C) Array, D) CSS, A, 25
+Which improves performance?, A) DOM virtual, B) DOM full reload, C) refresh, D) sync, A, 25
+Which hooks used?, A) useState, B) useLoop, C) useCSS, D) useHTML, A, 25
+Which JS runtime outside browser?, A) Node.js, B) Chrome, C) HTML, D) CSS, A, 25
+Which API stores browser data?, A) localStorage, B) database, C) RAM, D) cache only, A, 25
+Which fetch type async?, A) AJAX, B) HTML, C) CSS, D) DOM, A, 25
+Which framework uses components?, A) Angular, B) jQuery, C) PHP, D) SQL, A, 25
+Which tool bundles JS?, A) Webpack, B) JVM, C) Git, D) Docker, A, 25
+Which improves UI speed?, A) virtual DOM, B) reload, C) delay, D) sync, A, 25
